@@ -19,7 +19,10 @@ export default function Login(){
                     <button type="submit">Login</button>
                 </form>
 
-                <p style={{textAlign:'end'}}>Forgot password?</p>
+                <Link to='/ForgotP'>
+                    <p style={{textAlign:'end',fontWeight:'bold',color:'#000000'}}>Forgot password?</p>
+                </Link>
+                
 
                 <div className="optionSeparator">
                     <hr />

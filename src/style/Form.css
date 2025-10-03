@@ -7,9 +7,6 @@ form{
     align-items: start;
 }
 
-h2{
-    margin-bottom: 5px;
-}
 
 .formContainer{ 
     text-align: start;
@@ -17,12 +14,12 @@ h2{
     border:solid #D9D9D9 1px;
     height: 70vh;
     width: 70vh;
-    padding: 0 20%;
+    padding: 35px 20%;
     position: relative;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content:start;
 }
 
 input{
