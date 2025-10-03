@@ -2,26 +2,53 @@ form{
     display: flex;
     flex-direction: column;
     row-gap: 10px;
-    align-items: center;
+    align-items: start;
 }
 
-.formContainer{
+h2{
+    margin-bottom: 5px;
+}
+
+.formContainer{ 
+    text-align: start;
     background-color: white;
     border:solid #D9D9D9 1px;
     height: 70vh;
     width: 70vh;
+    padding: 0 20%;
     position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 input{
-    height: 30px;
-    width: 90%;
+    height:50px;
+    width: 100%;
     border-radius: 10px;
     padding: 10px;
+    box-sizing: border-box;
 }
 
 button{
     color: white;
+    width: 100%;
+}
+
+.optionSeparator{
+    display: flex;
+    align-items: center; 
+    text-align: center;
+    color: #D9D9D9;
+}
+
+.optionSeparator hr{
+    flex:1; 
+    border: 1px solid #D9D9D9;
+}
+.optionSeparator span{
+    padding: 0 10px;
 }
 
 #homelink{
@@ -29,4 +56,12 @@ button{
     top: 0;
     left: 0;
     cursor: pointer;
+    height: 35px;
+    width: 35px;
+    margin: 10px;
+}
+
+.signUP{
+    display: flex;
+    gap: 15px;
 }
