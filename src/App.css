@@ -5,3 +5,12 @@
   text-align: center;
 }
 
+body, html {
+  margin: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f5f5f5;
+}
+

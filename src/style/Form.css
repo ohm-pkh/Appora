@@ -1,3 +1,5 @@
+
+
 form{
     display: flex;
     flex-direction: column;
@@ -64,4 +66,16 @@ button{
 .signUP{
     display: flex;
     gap: 15px;
+}
+
+@media only screen and (max-width: 600px) {
+    *{
+        margin: 0;
+    }
+    .formContainer {
+        height: 100dvh;
+        width: 100dvw;
+        border: none;
+    }
+    
 }
