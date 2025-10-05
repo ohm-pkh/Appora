@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import G from "../assets/G_logo.svg";
 
 const style = {
@@ -15,48 +15,42 @@ const style = {
 };
 
 export default function GButton() {
-  const [sdkLoaded, setSdkLoaded] = useState(false);
 
-  // โหลด Google Identity SDK และ initialize แค่ครั้งเดียว
+  const handleClick = () => {
+    const callbackUrl = `${window.location.origin}/Login`;
+    const googleClientId =
+      "788574260421-l5081sfbvbop11slc42rtqupor1lbio6.apps.googleusercontent.com";
+    const targetUrl = `https://accounts.google.com/o/oauth2/auth?redirect_uri=${encodeURIComponent(
+      callbackUrl
+    )}&response_type=token&client_id=${googleClientId}&scope=openid%20email%20profile`;
+    window.location.href = targetUrl;
+  };
+
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://accounts.google.com/gsi/client";
-    script.async = true;
-    script.defer = true;
+    const fetchUserInfo = async () => {
+      const accessTokenRegex = /access_token=([^&]+)/;
+      const isMatch = window.location.href.match(accessTokenRegex);
 
-    script.onload = () => {
-      if (window.google) {
-        setSdkLoaded(true);
-        window.google.accounts.id.initialize({
-          client_id:
-            "788574260421-l5081sfbvbop11slc42rtqupor1lbio6.apps.googleusercontent.com", // ใส่ Client ID ของคุณ
-          callback: (response) => {
-            console.log("Google ID Token:", response.credential);
-            alert("Signed in successfully!");
-          },
-        });
+      if (isMatch) {
+        const accessToken = isMatch[1];
+        try {
+          const response = await fetch(
+            `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${accessToken}`
+          );
+          const data = await response.json();
+          console.log("Google user info:", data);
+        } catch (err) {
+          console.error("Failed to fetch user info:", err);
+        }
       }
     };
 
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
+    fetchUserInfo();
   }, []);
 
-  const handleGoogleSignIn = () => {
-    if (!sdkLoaded || !window.google) {
-      alert("Google SDK ยังโหลดไม่เสร็จ!");
-      return;
-    }
-
-    // แสดง popup login
-    window.google.accounts.id.prompt();
-  };
 
   return (
-    <button style={style} onClick={handleGoogleSignIn}>
+    <button style={style} onClick={handleClick}>
       <img src={G} alt="Google logo" width={20} height={20} />
       <span>Sign in with Google</span>
     </button>
