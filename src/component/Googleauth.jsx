@@ -17,13 +17,27 @@ const style = {
 export default function GButton() {
   const [sdkLoaded, setSdkLoaded] = useState(false);
 
-  // โหลด Google SDK
+  // โหลด Google Identity SDK และ initialize แค่ครั้งเดียว
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://accounts.google.com/gsi/client";
     script.async = true;
     script.defer = true;
-    script.onload = () => setSdkLoaded(true); // ตั้ง flag ว่าโหลดเสร็จแล้ว
+
+    script.onload = () => {
+      if (window.google) {
+        setSdkLoaded(true);
+        window.google.accounts.id.initialize({
+          client_id:
+            "788574260421-l5081sfbvbop11slc42rtqupor1lbio6.apps.googleusercontent.com", // ใส่ Client ID ของคุณ
+          callback: (response) => {
+            console.log("Google ID Token:", response.credential);
+            alert("Signed in successfully!");
+          },
+        });
+      }
+    };
+
     document.body.appendChild(script);
 
     return () => {
@@ -32,23 +46,12 @@ export default function GButton() {
   }, []);
 
   const handleGoogleSignIn = () => {
-    console.log(window.location.origin)
     if (!sdkLoaded || !window.google) {
       alert("Google SDK ยังโหลดไม่เสร็จ!");
       return;
     }
 
-    // Initialize Google Sign-In
-    window.google.accounts.id.initialize({
-      client_id:
-        "788574260421-l5081sfbvbop11slc42rtqupor1lbio6.apps.googleusercontent.com",
-      callback: (response) => {
-        console.log("Google ID Token:", response.credential);
-        alert("Signed in successfully!");
-      },
-    });
-
-    // แสดง prompt (One Tap / popup)
+    // แสดง popup login
     window.google.accounts.id.prompt();
   };
 
