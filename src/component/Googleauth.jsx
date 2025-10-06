@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import G from "../assets/G_logo.svg";
 
 const style = {
@@ -15,15 +15,17 @@ const style = {
 };
 
 export default function GButton() {
+  const {click,setClick} = useState('false');
 
   const handleClick = () => {
-    const callbackUrl = `${window.location}`;
+    const callbackUrl = `${window.location.origin}/Appora/${(window.location.href).includes("Login") ? 'Login' : 'SignUp'}`;
     const googleClientId =
       "788574260421-l5081sfbvbop11slc42rtqupor1lbio6.apps.googleusercontent.com";
     const targetUrl = `https://accounts.google.com/o/oauth2/auth?redirect_uri=${encodeURIComponent(
       callbackUrl
     )}&response_type=token&client_id=${googleClientId}&scope=openid%20email%20profile`;
     window.location.href = targetUrl;
+    setClick('true');
   };
 
   useEffect(() => {
@@ -46,7 +48,7 @@ export default function GButton() {
     };
 
     fetchUserInfo();
-  }, []);
+  }, [click]);
 
 
   return (
