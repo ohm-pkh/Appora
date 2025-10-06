@@ -17,7 +17,7 @@ const style = {
 export default function GButton() {
 
   const handleClick = () => {
-    const callbackUrl = `${window.location.origin}/Login`;
+    const callbackUrl = `${window.location}`;
     const googleClientId =
       "788574260421-l5081sfbvbop11slc42rtqupor1lbio6.apps.googleusercontent.com";
     const targetUrl = `https://accounts.google.com/o/oauth2/auth?redirect_uri=${encodeURIComponent(
