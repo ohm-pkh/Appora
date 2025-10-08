@@ -3,6 +3,9 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  --primary-color: #000000;
+  --secondary-color: #ffffff;
+  --third-color: #D9D9D9;
 }
 
 body, html {

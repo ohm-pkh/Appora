@@ -21,7 +21,7 @@ export default function SignUpform(props) {
                     <img src={Homesvg} alt="Home" id='homelink' />
                 </Link>
 
-                <h1 style={{ textAlign: 'center' }}>{props.title === "user" ? 'Sign Up' : 'Restaurant Sign Up'}</h1>
+                <h1>{props.title === "user" ? 'Sign Up' : 'Restaurant Sign Up'}</h1>
 
                 <form action="">
                     <input type="email" name="userEmail" id="email" placeholder='Email' />

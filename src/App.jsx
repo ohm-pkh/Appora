@@ -5,6 +5,7 @@ import Home from './page/Home.jsx'
 import Login from './page/Login.jsx'
 import SignUp from './page/SignUp.jsx'
 import RestaurantSingUp from './page/RestaurantSignUp.jsx'
+import ForgotPassword from './page/FogotPassword.jsx'
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -16,6 +17,7 @@ function App() {
         <Route path='/Login' element={<Login />}/>
         <Route path='/SignUp' element={<SignUp />}/>
         <Route path='/RestaurantSignUp' element={<RestaurantSingUp />} />
+        <Route path='/ForgotP' element={<ForgotPassword/>}/>
       </Routes>
     </Router>
   )

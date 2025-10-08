@@ -12,8 +12,8 @@ form{
 
 .formContainer{ 
     text-align: start;
-    background-color: white;
-    border:solid #D9D9D9 1px;
+    background-color: var(--secondary-color);
+    border:solid var(--third-color) 1px;
     height: 70vh;
     width: 70vh;
     min-height: fit-content;
@@ -27,6 +27,7 @@ form{
 
 h1{
     margin-bottom: 15px;
+    text-align: center;
 }
 
 input{
@@ -38,8 +39,8 @@ input{
 }
 
 button{
-    color: white;
-    background-color: black;
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
     width: 100%;
 }
 
@@ -47,13 +48,13 @@ button{
     display: flex;
     align-items: center; 
     text-align: center;
-    color: #D9D9D9;
+    color: var(--third-color);
     margin-bottom: 15px;
 }
 
 .optionSeparator hr{
     flex:1; 
-    border: 1px solid #D9D9D9;
+    border: 1px solid var(--third-color);
 }
 .optionSeparator span{
     padding: 0 10px;

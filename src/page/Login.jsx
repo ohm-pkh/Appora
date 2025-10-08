@@ -13,7 +13,7 @@ export default function Login(){
                     <img src={Homesvg} alt="Home" id='homelink'/>
                 </Link>
                 
-                <h1 style={{textAlign:'center'}}>Log In</h1>
+                <h1>Log In</h1>
 
                 <form action="">
                     <input type="email" name="userEmail" id="email" placeholder='Email'/>
