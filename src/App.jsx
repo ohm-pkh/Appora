@@ -6,6 +6,7 @@ import Login from './page/Login.jsx'
 import SignUp from './page/SignUp.jsx'
 import RestaurantSingUp from './page/RestaurantSignUp.jsx'
 import ForgotPassword from './page/FogotPassword.jsx'
+import RestaurantVerify from './page/RestaurantVerify.jsx'
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -18,6 +19,7 @@ function App() {
         <Route path='/SignUp' element={<SignUp />}/>
         <Route path='/RestaurantSignUp' element={<RestaurantSingUp />} />
         <Route path='/ForgotP' element={<ForgotPassword/>}/>
+        <Route path='/RestaurantVerify/:email' element={<RestaurantVerify/>}/>
       </Routes>
     </Router>
   )

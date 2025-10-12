@@ -4,7 +4,7 @@ import '../style/Form.css'
 export default function RestaurantSingUp(){
     return(
         <>
-            <SignUpform title=""/>
+            <SignUpform title="Restaurant"/>
         </>
     );
 };
