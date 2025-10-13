@@ -28,7 +28,11 @@ export default function Login() {
             setStatus("");
             console.log(Result.data.token);
             Cookies.set('token', Result.data.token, {expires:7});
-            navigate('/');
+            if(Result.data.role === 'Restaurant'){
+                navigate('/RestaurantPage');
+            }else{
+                navigate('/');
+            }
         } catch (err) {
             if (err.response && err.response.status === 403) {
                 try{

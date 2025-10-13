@@ -25,7 +25,7 @@ export default function ForgotPassword() {
                 try{
                     await axios.get('http://localhost:3000/Verify',
                         {
-                            params: {email:email}
+                            params: {email:email,type:`Verify_res`}
                         }
                     )
                 }catch(Err){
