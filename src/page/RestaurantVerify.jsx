@@ -1,4 +1,5 @@
 import { useState } from "react";
+import WaitingOverlay from "../component/WaitingOverlay";
 import axios from "axios";
 import OTPInput from "../component/VerifyCodeCheck";
 import { useParams,useNavigate } from "react-router-dom";
@@ -6,11 +7,14 @@ import { useParams,useNavigate } from "react-router-dom";
 export default function RestaurantVerify(props) {
     const [code, setCode] = useState("");
     const [error, setError] = useState("");
+    const [status, setStatus] = useState("");
     const { email } = useParams();
     const navigate = useNavigate();
     async function SendForm(e) {
         e.preventDefault();
         try {
+            setStatus("waiting");
+            console.log(status);
             const Result = await axios.post('http://localhost:3000/Verify',
                 {
                     Verifycode: code,
@@ -21,14 +25,18 @@ export default function RestaurantVerify(props) {
             if(!Result.data.success){
                 throw new Error('Verify fail');
             }
+            setStatus("");
             navigate(props.type === 'Verify_res' ? '/Login' : `/ResetPassword/${Result.data.token}`);
         } catch (err) {
+            setStatus("");
             setError(err.response.data.message);
         }
     }
 
     async function Resend() {
         try{
+            setStatus("waiting");
+            console.log(status);
             await axios.get('http://localhost:3000/Verify',
                 {
                     params:{
@@ -37,7 +45,9 @@ export default function RestaurantVerify(props) {
                     }
                 }
             );
+            setStatus("");
         }catch(err){
+            setStatus("");
             setError(err.response.data.message);
         }
     }
@@ -52,6 +62,8 @@ export default function RestaurantVerify(props) {
                 <p style={{ color: 'red' }}>{error ? error : ' '}</p>
                 <button onClick={SendForm}>Verify</button>
             </div>
+
+            <WaitingOverlay status={status} />
 
         </>
     )

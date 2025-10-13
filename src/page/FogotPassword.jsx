@@ -1,10 +1,11 @@
-import { useState } from 'react'
-    ; import axios from 'axios';
+import { useState } from 'react'; 
+import axios from 'axios';
+import WaitingOverlay from '../component/WaitingOverlay';
 import { Link, useNavigate } from 'react-router-dom'
 import Homesvg from '../assets/Home.svg'
 
 export default function ForgotPassword() {
-    4
+    const [status, setStatus] = useState("");
     const [email, setEmail] = useState('');
     const [error, SetError] = useState('');
     const navigate = useNavigate();
@@ -12,9 +13,12 @@ export default function ForgotPassword() {
     async function handdleSend(e) {
         e.preventDefault();
         try {
+            setStatus("waiting");
+            console.log(status);
             await axios.get('http://localhost:3000/ForPass', {
                 params: { email: email }
             });
+            setStatus("");
             navigate(`/VerifyPasswordRecovery/${email}`);
         } catch (err) {
             if (err.response && err.response.status === 403) {
@@ -27,12 +31,14 @@ export default function ForgotPassword() {
                 }catch(Err){
                     SetError(Err.response.data.message);
                 }
+                setStatus("");
                 alert('Please Verify your restaurant.');
                 navigate(`/RestaurantVerify/${email}`);
             } else {
                 console.log(err);
                 SetError(err.response.data.message);
             }
+            setStatus("");
         }
     }
 
@@ -60,6 +66,8 @@ export default function ForgotPassword() {
                     <Link to='/Login' style={{ color: '#000000', fontWeight: 'bold' }}><p>Log In</p></Link>
                 </div>
             </div>
+
+            <WaitingOverlay status={status} />
         </>
 
     )

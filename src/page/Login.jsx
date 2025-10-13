@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
+import WaitingOverlay from '../component/WaitingOverlay.jsx';
 import Cookies from 'js-cookie';
 import Homesvg from '../assets/Home.svg'
 import Gbutton from '../component/Googleauth.jsx';
@@ -8,6 +9,7 @@ import '../style/Form.css'
 
 export default function Login() {
     const [error, SetError] = useState('');
+    const [status, setStatus] = useState("");
     const navigate = useNavigate();
 
     async function SendForm(e) {
@@ -17,10 +19,13 @@ export default function Login() {
         try {
             const email = e.target.userEmail.value;
             const password = e.target.password.value;
+            setStatus("waiting");
+            console.log(status);
             const Result = await axios.post(`http://localhost:3000/LogIn`, {
                 email,
                 password
             });
+            setStatus("");
             console.log(Result.data.token);
             Cookies.set('token', Result.data.token, {expires:7});
             navigate('/');
@@ -35,12 +40,14 @@ export default function Login() {
                 }catch(Err){
                     SetError(Err.response.data.message);
                 }
+                setStatus("");
                 alert('Please Verify your restaurant.');
                 navigate(`/RestaurantVerify/${e.target.userEmail.value}`);
             } else {
                 console.log(err);
                 SetError(err.response.data.message);
             }
+            setStatus("");
         }
 
 
@@ -83,6 +90,8 @@ export default function Login() {
                     <Link to='/SignUp' style={{ color: '#000000', fontWeight: 'bold' }}><p>Sign Up</p></Link>
                 </div>
             </div>
+
+            <WaitingOverlay status={status} />
         </>
     );
 };

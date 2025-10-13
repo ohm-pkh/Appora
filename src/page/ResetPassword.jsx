@@ -1,4 +1,5 @@
 import { useState,useEffect } from "react";
+import WaitingOverlay from "../component/WaitingOverlay";
 import axios from "axios";
 import OTPInput from "../component/VerifyCodeCheck";
 import { useParams,useNavigate } from "react-router-dom";
@@ -6,6 +7,7 @@ import { useParams,useNavigate } from "react-router-dom";
 export default function ResetPassword() {
     const [Npassword, setNpassword] = useState("");
     const [Cpassword, setCpassword] =useState("");
+    const [status, setStatus] = useState("");
     const [error, setError] = useState("");
     const { token } = useParams();
     const navigate = useNavigate();
@@ -20,6 +22,8 @@ export default function ResetPassword() {
     async function SendForm(e) {
         e.preventDefault();
         try{
+            setStatus("waiting");
+            console.log(status);
             const Result = await axios.post('http://localhost:3000/Reset_pass',
                 {
                     token,
@@ -30,11 +34,13 @@ export default function ResetPassword() {
             if(!Result.data.success){
                 setError('Reset fail!');
             }else{
+                setStatus("");
                 alert("Reset password success.")
                 navigate('/Login');
             }
             
         }catch(err){
+            setStatus("");
             setError(err.response.data.message);
         }
     }
@@ -51,6 +57,8 @@ export default function ResetPassword() {
                 </form>
                 <p style={{ color: 'red' }}>{error ? error : ' '}</p>
             </div>
+
+            <WaitingOverlay status={status} />
         </>
     )
 }
