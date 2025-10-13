@@ -27,9 +27,9 @@ export default function Login() {
         } catch (err) {
             if (err.response && err.response.status === 403) {
                 try{
-                    await axios.post('http://localhost:3000/Resend_code',
+                    await axios.get('http://localhost:3000/Verify',
                         {
-                            email: e.target.userEmail.value
+                            params:{email:e.target.userEmail.value}
                         }
                     )
                 }catch(Err){

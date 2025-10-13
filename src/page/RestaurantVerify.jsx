@@ -3,7 +3,7 @@ import axios from "axios";
 import OTPInput from "../component/VerifyCodeCheck";
 import { useParams,useNavigate } from "react-router-dom";
 
-export default function RestaurantVerify() {
+export default function RestaurantVerify(props) {
     const [code, setCode] = useState("");
     const [error, setError] = useState("");
     const { email } = useParams();
@@ -11,16 +11,17 @@ export default function RestaurantVerify() {
     async function SendForm(e) {
         e.preventDefault();
         try {
-            const Result = await axios.post('http://localhost:3000/Verify_Res',
+            const Result = await axios.post('http://localhost:3000/Verify',
                 {
                     Verifycode: code,
-                    email
+                    email,
+                    type: props.type
                 }
             );
             if(!Result.data.success){
                 throw new Error('Verify fail');
             }
-            navigate('/Login')
+            navigate(props.type === 'Verify_res' ? '/Login' : `/ResetPassword/${Result.data.token}`);
         } catch (err) {
             setError(err.response.data.message);
         }
@@ -28,9 +29,12 @@ export default function RestaurantVerify() {
 
     async function Resend() {
         try{
-            await axios.post('http://localhost:3000/Resend_code',
+            await axios.get('http://localhost:3000/Verify',
                 {
-                    email
+                    params:{
+                        email,
+                        type : props.type
+                    }
                 }
             );
         }catch(err){
@@ -41,7 +45,7 @@ export default function RestaurantVerify() {
     return (
         <>
             <div className="formContainer" style={{ alignItems: "center" }}>
-                <h1>Verification Code</h1>
+                <h1>Verification Code {props.type === 'Recovery'? '(Recovery)' : ''}</h1>
                 <p style={{ textWrap: 'true', textAlign: 'center', color: '#D9D9D9', fontSize: '1em' }}>We have sent Verification code to your email address.</p>
                 <OTPInput onChangeOTP={(otp) => setCode(otp)} />
                 <p style={{color:'#D9D9D9'}}>I didn't receive a code <span style={{fontWeight:'bold',color:'#000000',cursor:'pointer'}} onClick={Resend}>Resend</span></p>
