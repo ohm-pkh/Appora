@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import WaitingOverlay from './WaitingOverlay';
 import axios from "axios";
 import Homesvg from '../assets/Home.svg'
@@ -10,6 +10,7 @@ export default function SignUpform(props) {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
     const [status, setStatus] = useState("");
+    const { Gemail } = useParams();
     const navigate = useNavigate();
     useEffect(() => {
         if (confirmPassword && confirmPassword !== password) {
@@ -18,7 +19,6 @@ export default function SignUpform(props) {
             setError("");
         }
     }, [password, confirmPassword]);
-
     async function SendForm(e) {
         e.preventDefault();
         if (!error) {
@@ -59,7 +59,7 @@ export default function SignUpform(props) {
                 <h1>{props.title === "User" ? 'Sign Up' : 'Restaurant Sign Up'}</h1>
 
                 <form onSubmit={SendForm}>
-                    <input type="email" name="userEmail" id="email" placeholder='Email' />
+                    <input type="email" name="userEmail" id="email" value={Gemail}  placeholder='Email' />
                     <input type="password" name="password" id="password" placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
                     <input type="password" name="confirmPassword" id="confirmPassword" placeholder='Repeat Password' onChange={(e) => setConfirmPassword(e.target.value)} style={error === "Password mismatch" ? { borderColor: "red" } : {}} />
                     <button type="submit">Sign Up</button>
@@ -68,12 +68,13 @@ export default function SignUpform(props) {
                 <div style={{ display: "flex", justifyContent: error ? 'space-between' : 'end' }}>
                     {error && <p style={{ color: "red" }}>{error}</p>}
                     {props.title === "User" && (
-                        <Link to="/RestaurantSignUp">
+                        <Link to={`/RestaurantSignUp/${Gemail}`}>
                             <p style={{ alignSelf: "end", fontWeight: "bold", color: "#000000" }}>
                                 Restaurant Sign Up
                             </p>
                         </Link>
                     )}
+
                 </div>
 
                 {props.title === "User" && (

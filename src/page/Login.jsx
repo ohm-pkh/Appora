@@ -91,7 +91,7 @@ export default function Login() {
 
                 <div className="accountConfirm">
                     <p style={{ color: '#D9D9D9' }}>Don't have an account?</p>
-                    <Link to='/SignUp' style={{ color: '#000000', fontWeight: 'bold' }}><p>Sign Up</p></Link>
+                    <Link to='/SignUp/' style={{ color: '#000000', fontWeight: 'bold' }}><p>Sign Up</p></Link>
                 </div>
             </div>
 
