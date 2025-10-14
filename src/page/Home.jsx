@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
+import { createApi } from '../function/api';
 
 export default function Home() {
     const [auth, SetAuth] = useState(false);
@@ -12,7 +13,8 @@ export default function Home() {
             if (!token) {
                 throw new Error("token not found.");
             }
-            const Result = await axios.get("http://localhost:3000/LogIn", {
+            const api = createApi('LogIn');
+            const Result = await axios.get(api, {
                 params: {
                     token
                 }

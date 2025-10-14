@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { createApi } from "../function/api";
+import WaitingOverlay from "./WaitingOverlay";
 import axios from "axios";
 import G from "../assets/G_logo.svg";
 
@@ -18,7 +20,8 @@ const style = {
 };
 
 export default function GButton() {
-  const [click,setClick] = useState(false);
+  const [click, setClick] = useState(false);
+  const [status, setStatus] = useState("");
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -34,22 +37,24 @@ export default function GButton() {
 
   useEffect(() => {
     const fetchUserInfo = async () => {
-      const idTokenRegex  = /id_token=([^&]+)/;
-      const isMatch = window.location.href.match(idTokenRegex );
+      const idTokenRegex = /id_token=([^&]+)/;
+      const isMatch = window.location.href.match(idTokenRegex);
 
       if (isMatch) {
-        const idToken  = isMatch[1];
+        const idToken = isMatch[1];
         try {
-          const Result = await axios.post('http://localhost:3000/Gauth',{
-            token: idToken 
+          setStatus("waiting");
+          const api = createApi('Gauth');
+          const Result = await axios.post(api, {
+            token: idToken
           })
-          console.log(Result);
-          Cookies.set('token', Result.data.token, {expires:7});
-            if(Result.data.role === 'Restaurant'){
-                navigate('/RestaurantPage');
-            }else{
-                navigate('/');
-            }
+          setStatus("");
+          Cookies.set('token', Result.data.token, { expires: 7 });
+          if (Result.data.role === 'Restaurant') {
+            navigate('/RestaurantPage');
+          } else {
+            navigate('/');
+          }
           // const response = await fetch(
           //   `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${accessToken}`
           // );
@@ -63,13 +68,17 @@ export default function GButton() {
     };
 
     fetchUserInfo();
-  }, [click]);
+  }, [navigate, click]);
 
 
   return (
-    <button style={style} onClick={handleClick}>
-      <img src={G} alt="Google logo" width={20} height={20} />
-      <span>Sign in with Google</span>
-    </button>
+    <>
+      <button style={style} onClick={handleClick}>
+        <img src={G} alt="Google logo" width={20} height={20} />
+        <span>Sign in with Google</span>
+      </button>
+      <WaitingOverlay status={status} />
+    </>
+
   );
 }

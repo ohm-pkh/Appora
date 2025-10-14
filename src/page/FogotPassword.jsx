@@ -2,6 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import WaitingOverlay from '../component/WaitingOverlay';
 import { Link, useNavigate } from 'react-router-dom'
+import { createApi } from '../function/api';
 import Homesvg from '../assets/Home.svg'
 
 export default function ForgotPassword() {
@@ -14,8 +15,8 @@ export default function ForgotPassword() {
         e.preventDefault();
         try {
             setStatus("waiting");
-            console.log(status);
-            await axios.get('http://localhost:3000/ForPass', {
+            const api = createApi('ForPass');
+            await axios.get(api, {
                 params: { email: email }
             });
             setStatus("");
@@ -23,7 +24,8 @@ export default function ForgotPassword() {
         } catch (err) {
             if (err.response && err.response.status === 403) {
                 try{
-                    await axios.get('http://localhost:3000/Verify',
+                    const api = createApi('Verify');
+                    await axios.get(api,
                         {
                             params: {email:email,type:`Verify_res`}
                         }

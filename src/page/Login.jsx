@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import WaitingOverlay from '../component/WaitingOverlay.jsx';
 import Cookies from 'js-cookie';
+import { createApi } from '../function/api.js';
 import Homesvg from '../assets/Home.svg'
 import Gbutton from '../component/Googleauth.jsx';
 import '../style/Form.css'
@@ -20,8 +21,8 @@ export default function Login() {
             const email = e.target.userEmail.value;
             const password = e.target.password.value;
             setStatus("waiting");
-            console.log(status);
-            const Result = await axios.post(`http://localhost:3000/LogIn`, {
+            const api = createApi('LogIn');
+            const Result = await axios.post(api, {
                 email,
                 password
             });
@@ -36,7 +37,8 @@ export default function Login() {
         } catch (err) {
             if (err.response && err.response.status === 403) {
                 try{
-                    await axios.get('http://localhost:3000/Verify',
+                    const api = createApi('Verify');
+                    await axios.get(api,
                         {
                             params:{email:e.target.userEmail.value}
                         }
@@ -91,7 +93,7 @@ export default function Login() {
 
                 <div className="accountConfirm">
                     <p style={{ color: '#D9D9D9' }}>Don't have an account?</p>
-                    <Link to='/SignUp/' style={{ color: '#000000', fontWeight: 'bold' }}><p>Sign Up</p></Link>
+                    <Link to='/SignUp' style={{ color: '#000000', fontWeight: 'bold' }}><p>Sign Up</p></Link>
                 </div>
             </div>
 

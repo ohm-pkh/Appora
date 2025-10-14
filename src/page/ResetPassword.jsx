@@ -3,6 +3,7 @@ import WaitingOverlay from "../component/WaitingOverlay";
 import axios from "axios";
 import OTPInput from "../component/VerifyCodeCheck";
 import { useParams,useNavigate } from "react-router-dom";
+import { createApi } from "../function/api";
 
 export default function ResetPassword() {
     const [Npassword, setNpassword] = useState("");
@@ -23,8 +24,8 @@ export default function ResetPassword() {
         e.preventDefault();
         try{
             setStatus("waiting");
-            console.log(status);
-            const Result = await axios.post('http://localhost:3000/Reset_pass',
+            const api = createApi('Reset_pass');
+            const Result = await axios.post(api,
                 {
                     token,
                     password: Npassword

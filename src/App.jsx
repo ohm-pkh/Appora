@@ -20,6 +20,8 @@ function App() {
         <Route path='/Login' element={<Login />}/>
         <Route path='/SignUp/:Gemail' element={<SignUp />}/>
         <Route path='/RestaurantSignUp/:Gemail' element={<RestaurantSingUp />} />
+        <Route path='/SignUp' element={<SignUp />}/>
+        <Route path='/RestaurantSignUp' element={<RestaurantSingUp />} />
         <Route path='/ForgotP' element={<ForgotPassword/>}/>
         <Route path='/RestaurantVerify/:email' element={<RestaurantVerify type='Verify_res'/>}/>
         <Route path='/VerifyPasswordRecovery/:email' element={<RestaurantVerify type='Recovery'/>}/>

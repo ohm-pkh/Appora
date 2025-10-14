@@ -3,6 +3,7 @@ import WaitingOverlay from "../component/WaitingOverlay";
 import axios from "axios";
 import OTPInput from "../component/VerifyCodeCheck";
 import { useParams,useNavigate } from "react-router-dom";
+import { createApi } from "../function/api";
 
 export default function RestaurantVerify(props) {
     const [code, setCode] = useState("");
@@ -14,8 +15,8 @@ export default function RestaurantVerify(props) {
         e.preventDefault();
         try {
             setStatus("waiting");
-            console.log(status);
-            const Result = await axios.post('http://localhost:3000/Verify',
+            const api = createApi('Verify');
+            const Result = await axios.post(api,
                 {
                     Verifycode: code,
                     email,
@@ -36,8 +37,8 @@ export default function RestaurantVerify(props) {
     async function Resend() {
         try{
             setStatus("waiting");
-            console.log(status);
-            await axios.get('http://localhost:3000/Verify',
+            const api = createApi('Verify');
+            await axios.get(api,
                 {
                     params:{
                         email,

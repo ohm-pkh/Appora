@@ -4,6 +4,7 @@ import WaitingOverlay from './WaitingOverlay';
 import axios from "axios";
 import Homesvg from '../assets/Home.svg'
 import Gbutton from './Googleauth';
+import { createApi } from '../function/api';
 
 export default function SignUpform(props) {
     const [password, setPassword] = useState("");
@@ -26,8 +27,8 @@ export default function SignUpform(props) {
                 const email = e.target.userEmail.value;
                 const password = e.target.password.value;
                 setStatus("waiting");
-                console.log(status);
-                const res = await axios.post(`http://localhost:3000/Sign_in`, {
+                const api = createApi('Sign_in');
+                const res = await axios.post(api, {
                     email,
                     password,
                     role: props.title
@@ -68,7 +69,7 @@ export default function SignUpform(props) {
                 <div style={{ display: "flex", justifyContent: error ? 'space-between' : 'end' }}>
                     {error && <p style={{ color: "red" }}>{error}</p>}
                     {props.title === "User" && (
-                        <Link to={`/RestaurantSignUp/${Gemail}`}>
+                        <Link to={`/RestaurantSignUp${Gemail ? '/'+Gemail : ''}`}>
                             <p style={{ alignSelf: "end", fontWeight: "bold", color: "#000000" }}>
                                 Restaurant Sign Up
                             </p>

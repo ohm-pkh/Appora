@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { Link,useNavigate } from 'react-router-dom'
+import { createApi } from '../function/api';
 
 export default function RestaurantPage(){
     const [auth, SetAuth] = useState(true);
@@ -13,7 +14,8 @@ export default function RestaurantPage(){
             if (!token) {
                 throw new Error("token not found.");
             }
-            const Result = await axios.get("http://localhost:3000/LogIn", {
+            const api = createApi('LogIn');
+            const Result = await axios.get(api, {
                 params: {
                     token
                 }
@@ -42,7 +44,7 @@ export default function RestaurantPage(){
         if(auth == false){
             navigate('/Login');
         }
-    }, [auth]);
+    }, [navigate,auth]);
 
     return (
         <>
