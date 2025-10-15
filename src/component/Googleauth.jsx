@@ -61,6 +61,10 @@ export default function GButton() {
           // const data = await response.json();
           // console.log("Google user info:", data);
         } catch (err) {
+          if(err.response.data.email&&err.status == 403){
+            alter('Please Verify your account.);
+            navigate('/RestaurantVerify/',err.response.data.email);
+          }
           console.error("Failed to fetch user info:", err);
           navigate(`/SignUp/${err.response.data.email}`);
         }
