@@ -1,5 +1,12 @@
+#root{
+    margin: 0 auto;
+}
+
 body,html{
     overflow: hidden;
+    background-color: #d9d9d9;
+    place-items: center;
+    justify-content: center;
 }
 
 form{
@@ -41,7 +48,7 @@ input{
 button{
     color: var(--secondary-color);
     background-color: var(--primary-color);
-    width: 100%;
+    width: fit-content;
 }
 
 .optionSeparator{

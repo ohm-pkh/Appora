@@ -1,0 +1,42 @@
+.fullPageContainer{
+    min-height: 100vh;
+    min-width: 100vw;
+    background-color: var(--secondary-color);
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
+.header{
+    display: flex;
+    padding: 1em;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h1{
+    margin:0;
+}
+
+.unchangeInfo{
+    color: #828282;
+    
+}
+
+.Info{
+    background-color: var(--third-color);
+    padding: 0.5em;
+    border-radius: 7px;
+    margin: 0 0.5em;
+    padding: 1em;
+    box-sizing: border-box;
+}
+
+.infoContainer{
+    display: flex; 
+    flex-direction:column; 
+    width: calc(100vw - 4em); 
+    text-align:left; 
+    gap:0.5em;
+    margin: 0 2em;
+}

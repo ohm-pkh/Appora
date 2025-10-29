@@ -17,6 +17,7 @@ const style = {
   gap: "10px",
   padding: "8px 16px",
   cursor: "pointer",
+  width:"100%",
 };
 
 export default function GButton() {

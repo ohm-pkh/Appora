@@ -63,7 +63,7 @@ export default function SignUpform(props) {
                     <input type="email" name="userEmail" id="email" value={Gemail}  placeholder='Email' />
                     <input type="password" name="password" id="password" placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
                     <input type="password" name="confirmPassword" id="confirmPassword" placeholder='Repeat Password' onChange={(e) => setConfirmPassword(e.target.value)} style={error === "Password mismatch" ? { borderColor: "red" } : {}} />
-                    <button type="submit">Sign Up</button>
+                    <button type="submit" style={{width:"100%"}}>Sign Up</button>
                 </form>
 
                 <div style={{ display: "flex", justifyContent: error ? 'space-between' : 'end' }}>

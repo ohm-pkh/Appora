@@ -71,7 +71,7 @@ export default function Login() {
                 <form onSubmit={SendForm}>
                     <input type="email" name="userEmail" id="email" placeholder='Email' />
                     <input type="password" name="password" id="password" placeholder='Password' />
-                    <button type="submit">Login</button>
+                    <button type="submit" style={{width:"100%"}}>Login</button>
                 </form>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
