@@ -1,10 +1,13 @@
 .fullPageContainer{
-    min-height: 100vh;
+    height: 100vh;
     min-width: 100vw;
     background-color: var(--secondary-color);
     display: flex;
     flex-direction: column;
     gap: 2em;
+    padding-bottom:2em;
+    overflow-y: scroll;
+    box-sizing: border-box;
 }
 
 .header{
@@ -29,14 +32,78 @@
     border-radius: 7px;
     margin: 0 0.5em;
     padding: 1em;
+    max-width: calc(100vw - 5em);
     box-sizing: border-box;
 }
 
 .infoContainer{
     display: flex; 
     flex-direction:column; 
-    width: calc(100vw - 4em); 
+    width: calc(100% - 4em); 
     text-align:left; 
     gap:0.5em;
     margin: 0 2em;
+    box-sizing: border-box;
+}
+
+a.link{
+    cursor: pointer;
+}
+
+.typeContainer{
+    background-color: #828282;
+    color: var(--third-color);
+    width: fit-content;
+    padding: 0 1em;
+    border-radius: 10px;
+}
+
+.allowOverflow{
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    gap: 1em;
+    padding-bottom: 0.7em;
+}
+
+
+.allowOverflow::-webkit-scrollbar {
+    height: 5px;
+}
+
+.allowOverflow::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+}
+
+.currentType{
+    border: var(--third-color) 1px solid;
+    border-radius: 10px;
+    height: fit-content;
+    padding: 5px 1em 0 1em;
+    max-width: 60vw;
+}
+
+.otherType{
+    border: var(--third-color) 1px solid;
+    border-radius: 10px;
+    height: fit-content;
+    max-height: 30vh;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    overflow-y: scroll;
+    overflow: auto;
+    padding: 0.5em 0.5em;
+    box-sizing: border-box;
+}
+
+.typeForm{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    max-width: 60vh;
+}
+
+.typeForm .typeContainer{
+    cursor: pointer;
 }

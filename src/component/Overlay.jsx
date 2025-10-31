@@ -1,0 +1,44 @@
+import TypeInsert from "./restaurantInput";
+
+function overlayType(type,params){
+
+    if(type == 'Types'){
+        return(
+            <>
+                <h2>Edit Type</h2>
+                <TypeInsert typesInclude={params.typeInclude} onTypeChange={params.onTypeChange} onClose={params.onClose}/>
+            </>
+        )
+    }else{
+        return null;
+    }
+}
+
+export default function OverlayRestaurantPage(params) {
+    const status=params.status
+    const action = params.action
+    console.log(params);
+    if (status !== true) return null; // show only when waiting
+
+    return (
+        <div className="overlayBackground">
+            <div
+                style={{
+                    backgroundColor: "#fff",
+                    padding: "20px 30px",
+                    borderRadius: "8px",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+                    display: "flex",
+                    flexDirection: "column",
+                    maxWidth:'70%',
+                    alignItems: "center",
+                }}
+            >
+                
+                {overlayType(action,params)}
+                
+
+            </div>
+        </div>
+    );
+}

@@ -14,6 +14,8 @@
   cursor: pointer;
   background-color: #f3f4f6;
   transition: all 0.15s ease;
+  border: #969AB8 1px solid;
+  box-sizing: border-box;
 }
 
 .circle-container.disabled {
@@ -61,6 +63,7 @@
   align-items: center;
   cursor: pointer;
 }
+
 .clear-button:hover {
   background-color: #f87171;
   color: white;
