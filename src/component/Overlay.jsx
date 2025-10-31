@@ -1,15 +1,23 @@
-import TypeInsert from "./restaurantInput";
+import {TypeInsert,LocChange} from "./restaurantInput";
 
 function overlayType(type,params){
 
-    if(type == 'Types'){
+    if(type === 'Types'){
         return(
             <>
                 <h2>Edit Type</h2>
                 <TypeInsert typesInclude={params.typeInclude} onTypeChange={params.onTypeChange} onClose={params.onClose}/>
             </>
         )
-    }else{
+    }else if(type === 'Loc'){
+        return(
+            <>
+                <h3>Select Location</h3>
+                <LocChange onLocChange={params.onLocChange} defaultPos={params.defaultPos} onClose={params.onClose}/>
+            </>
+        )
+    }
+    else{
         return null;
     }
 }

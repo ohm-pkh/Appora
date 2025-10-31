@@ -2,8 +2,9 @@ import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { createApi } from "../function/api";
 import OverlayBtn from "./closeSaveOverlay.jsx";
+import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 
-export default function TypeInsert(params) {
+export function TypeInsert(params) {
     const [unUsetype, setUnUseType] = useState([]);
     const [currentType, setCurrentType] = useState(params.typesInclude);
     console.log(params.typesInclude);
@@ -56,8 +57,57 @@ export default function TypeInsert(params) {
 
             </div>
 
-            <OverlayBtn onClose={params.onClose} onSave={params.onTypeChange} data={currentType}/>
+            <OverlayBtn onClose={params.onClose} onSave={params.onTypeChange} data={currentType} />
         </>
 
     )
+}
+
+
+export function LocChange({ defaultPos, onSelect, onClose, onLocChange }) {
+  // normalize default position
+  const initialPos =
+    Array.isArray(defaultPos) && defaultPos.length === 2
+      ? { lat: defaultPos[0], lng: defaultPos[1] }
+      : defaultPos || null;
+
+  const [position, setPosition] = useState(initialPos);
+
+  // map click event handler
+  function MapClickHandler() {
+    useMapEvents({
+      click(e) {
+        const { lat, lng } = e.latlng;
+        setPosition({ lat, lng });
+        onSelect?.({ lat, lng });
+      },
+    });
+    return position ? <Marker position={position} /> : null;
+  }
+
+  // save and close
+  function handleSave() {
+    if (position) {
+      onLocChange?.(position);
+    }
+    onClose?.();
+  }
+
+  return (
+    <div style={{width:'70vh', height:'fit-content'}}>
+      <MapContainer
+        center={position || [13.736717, 100.523186]}
+        zoom={13}
+        style={{ height: "300px", width: "100%", borderRadius: "8px" }}
+      >
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution="&copy; OpenStreetMap contributors"
+        />
+        <MapClickHandler />
+      </MapContainer>
+
+      <OverlayBtn onClose={onClose} onSave={handleSave} />
+    </div>
+  );
 }

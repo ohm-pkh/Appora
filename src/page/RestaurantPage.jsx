@@ -1,18 +1,22 @@
 import { useState, useEffect, useRef } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
 import { createApi } from '../function/api';
 import '../style/restaurantProfile.css';
 import CircularImageInput from '../component/ImgUploader';
 import OverlayRestaurantPage from '../component/Overlay';
+import WaitingOverlay from '../component/WaitingOverlay';
+
 
 export default function RestaurantPage() {
     const [auth, SetAuth] = useState(true);
     const [basicInfo, SetInfo] = useState({});
     const [types, setType] = useState([]);
     const [editing, setEditing] = useState(false);
+    const [status, setStatus] = useState("");
     const inputRef = useRef(null);
+    const [currentLoc, setCurrentLoc] = useState(``);
     const [overlay, setOverlay] = useState({ status: false });
     const navigate = useNavigate();
 
@@ -20,7 +24,7 @@ export default function RestaurantPage() {
         try {
             const token = Cookies.get("token");
             if (!token) throw new Error("token not found.");
-
+            setStatus('waiting');
             const api = createApi("RestaurantPage");
             const Result = await axios.get(api, { params: { token } });
 
@@ -30,12 +34,15 @@ export default function RestaurantPage() {
             }
 
             const newData = Result.data.Data;
+            console.log(newData);
             const newType = Result.data.types;
             SetInfo(newData);
             setType(newType);
             SetAuth(true);
         } catch {
             SetAuth(false);
+        }finally{
+            setStatus("");
         }
     };
 
@@ -43,6 +50,10 @@ export default function RestaurantPage() {
         Cookies.remove("token");
         SetAuth(false);
     }
+
+    const handleSelect = ({ lat, lng }) => {
+        SetInfo((prev) => ({ ...prev, lat, lon: lng }));
+    };
 
     function startEdit() {
         setEditing(true);
@@ -66,13 +77,33 @@ export default function RestaurantPage() {
         setEditing(false);
     }
 
-    function handleDescriptionChange(e){
-        SetInfo({...basicInfo,description: e.target.value});
+    function handleDescriptionChange(e) {
+        SetInfo({ ...basicInfo, description: e.target.value });
     }
 
     function StartOverlay(act) {
         setOverlay({ status: true, action: act });
     }
+
+
+
+    useEffect(() => {
+        if (!basicInfo.lat || !basicInfo.lon) return;
+        async function getlocation(){
+            setStatus("waiting");
+            const api= createApi('Location');
+            const loc = await axios.get(api,{
+                params:{
+                    lat: basicInfo.lat,
+                    lon: basicInfo.lon
+                }
+            });
+            console.log(loc.data);
+            setCurrentLoc(loc.data.location);
+            setStatus("");
+        }
+        getlocation();
+    }, [basicInfo.lat, basicInfo.lon])
 
     useEffect(() => {
         CheckAuth();
@@ -170,18 +201,34 @@ export default function RestaurantPage() {
                 </div>
 
                 <div className='Info'>
-                    <textarea   style={{border: 'none',backgroundColor: '#D9D9D9',height: '10em',width: '100%',padding: '0.5em',resize: 'none',outline: 'none', textAlign: 'left',verticalAlign: 'top', }} placeholder='Description' value={basicInfo.description} onChange={handleDescriptionChange}/>
+                    <textarea style={{ border: 'none', backgroundColor: '#D9D9D9', height: '10em', width: '100%', padding: '0.5em', resize: 'none', outline: 'none', textAlign: 'left', verticalAlign: 'top', }} placeholder='Description' value={basicInfo.description} onChange={handleDescriptionChange} />
                 </div>
 
 
             </div>
 
+            {/*Restaurant Location */}
+            <div className="infoContainer">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <p>Restaurant Location</p>
+                    <span>
+                        <a className='link' onClick={() => StartOverlay('Loc')}>Change Location</a>
+                    </span>
+                </div>
+
+                <div className="unchangeInfo Info allowOverflow">
+                    {basicInfo.lat ? currentLoc : "Not defined"}
+                </div>
 
 
+            </div>
 
             <OverlayRestaurantPage
                 status={overlay.status} action={overlay.action} onClose={() => setOverlay({ status: false })}
-                typeInclude={types} onTypeChange={(data) => setType(data)} />
+                typeInclude={types} onTypeChange={(data) => setType(data)} onLocChange={handleSelect}
+                defaultPos={basicInfo.lat && basicInfo.lon ? [basicInfo.lat, basicInfo.lon] : null} />
+
+            <WaitingOverlay status={status} />
 
         </div>
     );
