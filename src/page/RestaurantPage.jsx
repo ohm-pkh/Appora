@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef,} from 'react';
+import { useState, useEffect, useRef, } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
@@ -7,6 +7,7 @@ import '../style/restaurantProfile.css';
 import CircularImageInput from '../component/ImgUploader';
 import OverlayRestaurantPage from '../component/Overlay';
 import WaitingOverlay from '../component/WaitingOverlay';
+import DeliveryContainer from '../component/deliveryContainer';
 
 const dayArr = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -23,7 +24,9 @@ export default function RestaurantPage() {
     const [currentLoc, setCurrentLoc] = useState(``);
     const [overlay, setOverlay] = useState({ status: false });
     const [isEmergency, setEmergency] = useState(false);
+    const [delivery, setDelivery] = useState([]);
     const navigate = useNavigate();
+    const currentNewDeli = 0;
 
     const CheckAuth = async () => {
         try {
@@ -42,11 +45,12 @@ export default function RestaurantPage() {
             console.log(newData);
             const newType = Result.data.types;
             const newDay = Result.data.days;
-            console.log(newDay);
+            const newDeli = Result.data.delivery;
             setEmergency(newData.emergency || false);
             SetInfo(newData);
             setType(newType);
-            await setDay(newDay);
+            setDay(newDay);
+            setDelivery(newDeli);
             SetAuth(true);
         } catch {
             SetAuth(false);
@@ -94,13 +98,31 @@ export default function RestaurantPage() {
         setOverlay({ status: true, action: act });
     }
 
-    
+    function addDeli() {
+        setDelivery(prev => {
+            const hasLink = prev.some(d => d.link === 'Link')
+
+            if (hasLink) return prev
+
+            return [...prev, { id: { currentNewDeli }, name: 'Name', link: 'Link' }]
+        })
+    }
+
+    function updateDeli(obj) {
+        setDelivery(prev => {
+            return prev.map(d =>
+                d.id === obj.id ? obj : d
+            )
+        })
+    }
+
+
 
     useEffect(() => {
         const d = new Date();
         const day = d.getDay()
         setCurrentDay(days.find(d => d.day === dayArr[day]) ?? null);
-    },[days]);
+    }, [days]);
 
 
 
@@ -250,21 +272,41 @@ export default function RestaurantPage() {
                 </div>
 
                 <div style={{ backgroundColor: "#FFFFFF", display: 'flex' }}>
-                    <div className="unchangeInfo Info allowOverflow" style={{ width: '100%', alignItems: 'center', justifyContent:'space-around'}}>
+                    <div className="unchangeInfo Info allowOverflow" style={{ width: '100%', alignItems: 'center', justifyContent: 'space-around' }}>
                         {currentDay && !isEmergency ? <><div>Today: {currentDay.day}</div><div>Open: {currentDay.open}</div><div>Close: {currentDay.close}</div></> : "Close"}
                     </div>
-                    <button style={{height:'100%'}} onClick={()=>setEmergency(!isEmergency)}>
+                    <button style={{ height: '100%' }} onClick={() => setEmergency(!isEmergency)}>
                         Emergency Close
                     </button>
                 </div>
+            </div>
 
+            {/*Delivery app list*/}
+            <div className="infoContainer">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <p>Delivery app list</p>
+                    <span>
+                        <a className='link' onClick={() => addDeli()}>+ Add Delivery</a>
+                    </span>
+                </div>
+
+
+                <div className="unchangeInfo Info allowOverflowy" >
+                    {delivery.length > 0 ?
+                        delivery.map((deli) => (
+                            <DeliveryContainer deli={deli} onUpdate={updateDeli}/>
+                        ))
+                        :
+                        "None"
+                    }
+                </div>
 
             </div>
 
             <OverlayRestaurantPage
                 status={overlay.status} action={overlay.action} onClose={() => setOverlay({ status: false })}
                 typeInclude={types} onTypeChange={(data) => setType(data)} onLocChange={handleSelect}
-                defaultPos={basicInfo.lat && basicInfo.lon ? [basicInfo.lat, basicInfo.lon] : null} day={days} onSaveDay={(newday)=>setDay(newday)}/>
+                defaultPos={basicInfo.lat && basicInfo.lon ? [basicInfo.lat, basicInfo.lon] : null} day={days} onSaveDay={(newday) => setDay(newday)} />
 
             <WaitingOverlay status={status} />
 

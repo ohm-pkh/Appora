@@ -160,3 +160,22 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   opacity: 0;
   display: none;
 }
+
+.allowOverflowy{
+  max-height: 10em;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+.allowOverflowy::-webkit-scrollbar {
+    width: 5px;
+}
+
+.allowOverflowy::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+}
+
+.allowOverflowy input[type="text"]{
+  border: #828282 2px solid;
+  margin-bottom: 1em;
+}
