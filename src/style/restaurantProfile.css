@@ -177,5 +177,12 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 .allowOverflowy input[type="text"]{
   border: #828282 2px solid;
-  margin-bottom: 1em;
+}
+
+.allowOverflowy div{
+  margin-bottom: 5em;
+}
+
+.allowOverflowy div:last-of-type{
+  margin-bottom: 0em;
 }

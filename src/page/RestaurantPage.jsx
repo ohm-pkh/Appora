@@ -294,7 +294,7 @@ export default function RestaurantPage() {
                 <div className="unchangeInfo Info allowOverflowy" >
                     {delivery.length > 0 ?
                         delivery.map((deli) => (
-                            <DeliveryContainer deli={deli} onUpdate={updateDeli}/>
+                            <DeliveryContainer key={deli.id}deli={deli} onUpdate={updateDeli}/>
                         ))
                         :
                         "None"
