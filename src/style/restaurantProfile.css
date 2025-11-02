@@ -101,9 +101,62 @@ a.link{
     display: flex;
     flex-direction: column;
     gap: 1em;
-    max-width: 60vh;
+    max-width: 70vh;
 }
 
 .typeForm .typeContainer{
     cursor: pointer;
+}
+
+.tableWrapper {
+  width: 100%;
+  justify-content: center;
+}
+.dayTable {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  background-color: #fff;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+  table-layout: fixed;
+}
+
+.dayTable th,
+.dayTable td {
+  padding: 0.4em 0;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.dayLabel {
+  text-align: left;
+  padding-left: 0.8em;
+}
+
+.timeContainer {
+  width: 30%;
+  height: 2em;
+}
+
+.timeInput {
+  width: 100%;
+  border: none;
+  text-align: center;
+  font-size: 0.9rem;
+  padding: 0.2em;
+  outline: none;
+  background: transparent;
+  height: 100%;
+}
+
+.statusCell {
+  font-weight: bold;
+  text-align: center;
+  width: 15%;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  display: none;
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef,} from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
@@ -8,16 +8,21 @@ import CircularImageInput from '../component/ImgUploader';
 import OverlayRestaurantPage from '../component/Overlay';
 import WaitingOverlay from '../component/WaitingOverlay';
 
+const dayArr = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
 
 export default function RestaurantPage() {
     const [auth, SetAuth] = useState(true);
     const [basicInfo, SetInfo] = useState({});
     const [types, setType] = useState([]);
+    const [days, setDay] = useState([]);
+    const [currentDay, setCurrentDay] = useState({});
     const [editing, setEditing] = useState(false);
     const [status, setStatus] = useState("");
     const inputRef = useRef(null);
     const [currentLoc, setCurrentLoc] = useState(``);
     const [overlay, setOverlay] = useState({ status: false });
+    const [isEmergency, setEmergency] = useState(false);
     const navigate = useNavigate();
 
     const CheckAuth = async () => {
@@ -36,12 +41,16 @@ export default function RestaurantPage() {
             const newData = Result.data.Data;
             console.log(newData);
             const newType = Result.data.types;
+            const newDay = Result.data.days;
+            console.log(newDay);
+            setEmergency(newData.emergency || false);
             SetInfo(newData);
             setType(newType);
+            await setDay(newDay);
             SetAuth(true);
         } catch {
             SetAuth(false);
-        }finally{
+        } finally {
             setStatus("");
         }
     };
@@ -85,15 +94,23 @@ export default function RestaurantPage() {
         setOverlay({ status: true, action: act });
     }
 
+    
+
+    useEffect(() => {
+        const d = new Date();
+        const day = d.getDay()
+        setCurrentDay(days.find(d => d.day === dayArr[day]) ?? null);
+    },[days]);
+
 
 
     useEffect(() => {
         if (!basicInfo.lat || !basicInfo.lon) return;
-        async function getlocation(){
+        async function getlocation() {
             setStatus("waiting");
-            const api= createApi('Location');
-            const loc = await axios.get(api,{
-                params:{
+            const api = createApi('Location');
+            const loc = await axios.get(api, {
+                params: {
                     lat: basicInfo.lat,
                     lon: basicInfo.lon
                 }
@@ -223,10 +240,31 @@ export default function RestaurantPage() {
 
             </div>
 
+            {/*Restaurant active time */}
+            <div className="infoContainer">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <p>Opening hours</p>
+                    <span>
+                        <a className='link' onClick={() => StartOverlay('Day')}>+ Add time</a>
+                    </span>
+                </div>
+
+                <div style={{ backgroundColor: "#FFFFFF", display: 'flex' }}>
+                    <div className="unchangeInfo Info allowOverflow" style={{ width: '100%', alignItems: 'center', justifyContent:'space-around'}}>
+                        {currentDay && !isEmergency ? <><div>Today: {currentDay.day}</div><div>Open: {currentDay.open}</div><div>Close: {currentDay.close}</div></> : "Close"}
+                    </div>
+                    <button style={{height:'100%'}} onClick={()=>setEmergency(!isEmergency)}>
+                        Emergency Close
+                    </button>
+                </div>
+
+
+            </div>
+
             <OverlayRestaurantPage
                 status={overlay.status} action={overlay.action} onClose={() => setOverlay({ status: false })}
                 typeInclude={types} onTypeChange={(data) => setType(data)} onLocChange={handleSelect}
-                defaultPos={basicInfo.lat && basicInfo.lon ? [basicInfo.lat, basicInfo.lon] : null} />
+                defaultPos={basicInfo.lat && basicInfo.lon ? [basicInfo.lat, basicInfo.lon] : null} day={days} onSaveDay={(newday)=>setDay(newday)}/>
 
             <WaitingOverlay status={status} />
 
