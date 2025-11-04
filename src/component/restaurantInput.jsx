@@ -123,7 +123,7 @@ function getdayTable(days, day, toggleChange, onTimeChange) {
   const dayInfo = days.find(d => d.day === shortDay) ?? null;
 
   return (
-    <tr>
+    <tr key={day.id}>
       <td className="dayLabel">{day}</td>
       {dayInfo ? (
         <>
@@ -394,7 +394,7 @@ export function MenuForm({ onClose, onSave, currentNewMenu }) {
             <p style={{ width: '1px' }}> </p>
           )
         }
-        <OverlayBtn onClose={onClose} onSave={goTosave} data={{ ...menu, category: Usecategory }} error={true} />
+        <OverlayBtn onClose={onClose} onSave={goTosave} data={{ ...menu, category: Usecategory }} error={error} />
       </div>
 
     </>

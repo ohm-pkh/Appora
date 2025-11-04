@@ -4,30 +4,44 @@ export function CloseBtn(onClose){
     )
 }
 
-export function SaveBtn(onSave,onClose,data,error=false){
-    function save(){
-        let err = false;
-        if(error){
-            err = onSave(data);
-        }else{
-            onSave(data);
-        }
-        if(err !== false){
-            onClose();
-        }
-        
-    }
+// closeSaveOverlay.jsx
+export function SaveBtn(onSave, onClose, data, error = false) {
+  async function save() {
+    try {
+      // if onSave returns false, don't close
+      const result = await onSave(data);
+      if (result === false) return;
 
-    return(
-        <button onClick={()=>save()}>Save</button>
-    )
+      // if there's a known error string (like form error), don't close
+      if (error) return;
+
+      onClose();
+    } catch (e) {
+      console.error("Save error:", e);
+      // do not close on error
+    }
+  }
+
+  return (
+    <button onClick={save}>Save</button>
+  );
 }
 
-export default function OverlayBtn(params){
-    return(
-        <div style={{marginTop:"1em", display:'flex', gap:'1.5em', justifyContent:'end', width:'100%'}}>
-            {CloseBtn(params.onClose)}
-            {SaveBtn(params.onSave,params.onClose,params.data,params.error)}
-        </div>
-    )
+
+
+export default function OverlayBtn(params) {
+  return (
+    <div
+      style={{
+        marginTop: "1em",
+        display: "flex",
+        gap: "1.5em",
+        justifyContent: "end",
+        width: "100%",
+      }}
+    >
+      {CloseBtn(params.onClose)}
+      {SaveBtn(params.onSave, params.onClose, params.data, params.error)}
+    </div>
+  );
 }

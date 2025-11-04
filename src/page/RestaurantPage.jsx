@@ -12,7 +12,6 @@ import MenuContainer from '../component/menuContainer';
 
 const dayArr = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-
 export default function RestaurantPage() {
     const [auth, SetAuth] = useState(true);
     const [basicInfo, SetInfo] = useState({});
@@ -28,9 +27,19 @@ export default function RestaurantPage() {
     const [delivery, setDelivery] = useState([]);
     const [menus, setMenu] = useState([]);
     const [menuEdit, setMenuEdit] = useState([]);
+    const [isEditInfo, setIsEditInfo] = useState(false);
     const navigate = useNavigate();
-    let currentNewDeli = 0;
-    let currentNewMenu = 0;
+    const originalData = useRef({
+        data: null,
+        type: null,
+        day: null,
+        menu: null,
+        deli: null,
+    });
+
+    let currentNewDeli = useRef(0);
+    let currentNewMenu = useRef(0);
+
 
     const CheckAuth = async () => {
         try {
@@ -46,11 +55,25 @@ export default function RestaurantPage() {
             }
 
             const newData = Result.data.userData;
-            console.log(newData);
             const newType = Result.data.types;
             const newDay = Result.data.days;
             const newDeli = Result.data.delivery;
             const newMenu = Result.data.menu;
+
+            originalData.current = {
+                data: newData,
+                type: newType,
+                day: newDay,
+                deli: newDeli,
+                menu: newMenu,
+            };
+            originalData.current = {
+                data: Result.data.userData,
+                type: Result.data.types,
+                day: Result.data.days,
+                deli: Result.data.delivery,
+                menu: Result.data.menu
+            };
             setEmergency(newData.emergency || false);
             SetInfo(newData);
             setCurrentLoc(newData.location);
@@ -89,7 +112,7 @@ export default function RestaurantPage() {
     function onProfilePicChange(file) {
         SetInfo(prev => ({
             ...prev,
-            photo_path: 'new_photo',
+            new_photo_path: 'new_photo',
             photo: file,
         }))
     }
@@ -119,10 +142,9 @@ export default function RestaurantPage() {
             const hasLink = prev.some(d => d.link === null || d.name === null)
 
             if (hasLink) return prev
-
-            return [...prev, { id: { currentNewDeli }, name: null, link: null }]
+            return [...prev, { id: currentNewDeli.current, name: null, link: null }]
         })
-        currentNewDeli += 1;
+        currentNewDeli.current += 1;
     }
 
     function updateDeli(obj) {
@@ -180,6 +202,78 @@ export default function RestaurantPage() {
         }
         getlocation();
     }, [basicInfo.lat, basicInfo.lon])
+
+    function cancelPage() {
+        SetInfo(originalData.current.data);
+        setCurrentLoc(originalData.current.data.location);
+        setType(originalData.current.type);
+        setDay(originalData.current.day);
+        setDelivery(originalData.current.deli);
+        setMenu(originalData.current.menu);
+    }
+    function makeNewMenuId() {
+        const id = currentNewMenu.current;
+        currentNewMenu.current++;
+        return id;
+    }
+
+    async function savePage() {
+        setStatus('waiting');
+        const token = Cookies.get("token")
+        const form = new FormData()
+        form.append("main_photo", basicInfo.photo)
+        menus.forEach((m, i) => {
+            if (m.photo instanceof File) {
+                form.append(`menu_photo_${i}`, m.photo)
+            }
+        })
+        const data = {
+            basicInfo: {
+                name: basicInfo.name,
+                description: basicInfo.description,
+                lat: basicInfo.lat,
+                lon: basicInfo.lon,
+                location: currentLoc,
+                status: basicInfo.status,
+                public_id: basicInfo.public_id
+            },
+            token,
+            types,
+            days,
+            delivery,
+            menus: menus.map((m, i) => ({
+                id: m.id,
+                name: m.name,
+                photo_path: m.photo_path,
+                price: m.price,
+                category: m.category
+            }))
+        }
+
+        form.append("meta", JSON.stringify(data));
+        const api = createApi('RestaurantPage')
+        const res = await axios.patch(api, form, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
+        setStatus("");
+        console.log(res);
+    }
+
+    useEffect(() => {
+        const { data, type, day, deli, menu } = originalData.current;
+
+        // Compare current state with original values
+        const hasChanges =
+            JSON.stringify(basicInfo) !== JSON.stringify(data) ||
+            JSON.stringify(types) !== JSON.stringify(type) ||
+            JSON.stringify(days) !== JSON.stringify(day) ||
+            JSON.stringify(delivery) !== JSON.stringify(deli) ||
+            JSON.stringify(menus) !== JSON.stringify(menu);
+
+        setIsEditInfo(hasChanges);
+    }, [basicInfo, types, days, delivery, menus]);
 
     useEffect(() => {
         CheckAuth();
@@ -261,7 +355,7 @@ export default function RestaurantPage() {
 
                 <div className='unchangeInfo Info allowOverflow'>
                     {types.length !== 0 ? types.map((type, index) => (
-                        <div key={index} className="typeContainer">
+                        <div key={index} className="typeContainer" style={{ height: '1.5em' }}>
                             {type.type}
                         </div>
                     ))
@@ -361,11 +455,22 @@ export default function RestaurantPage() {
 
             </div>
 
+            <div className='btnContainer' style={{ display: 'flex', gap: '2em', justifyContent: 'end', padding: '0 2em' }}>
+                {isEditInfo ?
+                    <>
+                        <button style={{ width: '25%', backgroundColor: 'white', border: '2px solid black', color: 'black' }} onClick={() => cancelPage()}>Cancel</button>
+                        <button style={{ width: '25%' }} onClick={() => savePage()}>Save</button>
+                    </>
+                    :
+                    <button style={{ width: '25%' }}>Show Preview</button>
+                }
+            </div>
+
             <OverlayRestaurantPage
                 status={overlay.status} action={overlay.action} onClose={() => setOverlay({ status: false })}
                 typeInclude={types} onTypeChange={(data) => setType(data)} onLocChange={handleSelect}
                 defaultPos={basicInfo.lat && basicInfo.lon ? [basicInfo.lat, basicInfo.lon] : null} day={days} onSaveDay={(newday) => setDay(newday)}
-                onSaveMenu={saveMenu} currentNewMenu={{ id: currentNewMenu++ }} currentMenu={menuEdit} menuEdit={menuEdit} onSaveMenuChanage={updateMenu} />
+                onSaveMenu={saveMenu} currentNewMenu={{ id: makeNewMenuId() }} currentMenu={menuEdit} menuEdit={menuEdit} onSaveMenuChanage={updateMenu} />
 
             <WaitingOverlay status={status} />
 
