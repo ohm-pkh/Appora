@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import "../style/ImageInput.css"; // import the CSS file
 
-export default function CircularImageInput({ initialSrc = null, size = 120, onChange = null, alt = "profile image", disabled = false, }) {
+export default function ImageInput({ initialSrc = null, size = 120, onChange = null, alt = "profile image", disabled = false,circular=true }) {
     const inputRef = useRef(null);
     const [preview, setPreview] = useState(initialSrc);
     const [isHover, setIsHover] = useState(false);
@@ -36,7 +36,7 @@ export default function CircularImageInput({ initialSrc = null, size = 120, onCh
     }
 
     return (
-        <div className="circular-image-wrapper">
+        <div className="circular-image-wrapper" style={{borderRadius:circular?'50%':'10%'}}>
             <div
                 role="button"
                 tabIndex={0}
@@ -47,7 +47,7 @@ export default function CircularImageInput({ initialSrc = null, size = 120, onCh
                 onMouseEnter={() => setIsHover(true)}
                 onMouseLeave={() => setIsHover(false)}
                 className={`circle-container ${disabled ? "disabled" : ""}`}
-                style={{ width: size, height: size }}
+                style={{ width: size, height: size, borderRadius:circular?'50%':'10%' }}
             >
                 {preview ? (
                     <img

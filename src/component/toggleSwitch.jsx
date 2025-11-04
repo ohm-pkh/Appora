@@ -35,7 +35,7 @@ export default function ToggleSwitch({initStatus,onSwitch}) {
                     right: 0;
                     bottom: 0;
                     background-color: #ccc;
-                    transition: 0.4s;
+                    transition: 0.2s;
                 }
 
                 .slider:before {
@@ -46,7 +46,7 @@ export default function ToggleSwitch({initStatus,onSwitch}) {
                     left: 0.1em;
                     bottom: 0.1em;
                     background-color: white;
-                    transition: 0.4s;
+                    transition: 0.2s;
                 }
 
                 input:checked + .slider {

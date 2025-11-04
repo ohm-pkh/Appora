@@ -4,10 +4,18 @@ export function CloseBtn(onClose){
     )
 }
 
-export function SaveBtn(onSave,onClose,data){
+export function SaveBtn(onSave,onClose,data,error=false){
     function save(){
-        onSave(data);
-        onClose();
+        let err = false;
+        if(error){
+            err = onSave(data);
+        }else{
+            onSave(data);
+        }
+        if(err !== false){
+            onClose();
+        }
+        
     }
 
     return(
@@ -19,7 +27,7 @@ export default function OverlayBtn(params){
     return(
         <div style={{marginTop:"1em", display:'flex', gap:'1.5em', justifyContent:'end', width:'100%'}}>
             {CloseBtn(params.onClose)}
-            {SaveBtn(params.onSave,params.onClose,params.data)}
+            {SaveBtn(params.onSave,params.onClose,params.data,params.error)}
         </div>
     )
 }

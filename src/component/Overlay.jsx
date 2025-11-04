@@ -1,4 +1,4 @@
-import { TypeInsert, LocChange, DayTable } from "./restaurantInput";
+import { TypeInsert, LocChange, DayTable,MenuForm } from "./restaurantInput";
 
 function overlayType(type, params) {
 
@@ -24,6 +24,20 @@ function overlayType(type, params) {
 
             </>
 
+        )
+    }else if(type === 'Menu'){
+        return(
+            <>
+                <h3>Add menu</h3>
+                <MenuForm onClose={params.onClose} onSave={params.onSaveMenu} currentNewMenu={params.currentNewMenu}/>
+            </>
+        )
+    }else if(type=== 'menuEdit'){
+        return(
+            <>
+                <h3>Edit menu</h3>
+                <MenuForm onClose={params.onClose} onSave={params.onSaveMenuChanage} currentNewMenu={params.currentMenu} ></MenuForm>
+            </>
         )
     }
     else {

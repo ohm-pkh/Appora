@@ -186,3 +186,186 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .allowOverflowy div:last-of-type{
   margin-bottom: 0em;
 }
+
+/* === Form Grid Layout === */
+.menuFormContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  gap: 1.5em;
+  width: 60vw;
+  align-items: start;
+}
+
+.leftColumn,
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+/* === Inputs & Labels === */
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+label {
+  font-weight: 500;
+  margin-bottom: 0.4em;
+}
+
+.inputBox {
+  border: none;
+  background-color: #d9d9d9;
+  border-radius: 10px;
+  padding: 0.5em;
+  outline: none;
+}
+
+.textareaBox {
+  border: none;
+  background-color: #d9d9d9;
+  border-radius: 10px;
+  padding: 0.5em;
+  resize: none;
+  min-height: 5em;
+  outline: none;
+}
+
+/* === Selected Category List === */
+.allowOverflowUCA {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  background-color: #d9d9d9;
+  border-radius: 0.5em;
+  color: #828282;
+  padding: 0.5em;
+  box-sizing: border-box;
+  max-height: 3em;
+  overflow-y: auto;
+}
+
+/* === Unselected Category List === */
+.allowOverflowCA {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  background-color: #d9d9d9;
+  border-radius: 0.5em;
+  color: #828282;
+  padding: 0.5em;
+  box-sizing: border-box;
+  max-height: 6em;
+  overflow-y: auto;
+}
+
+/* === Scrollbar Styling === */
+.allowOverflowCA::-webkit-scrollbar,
+.allowOverflowUCA::-webkit-scrollbar {
+  width: 6px;
+}
+
+.allowOverflowCA::-webkit-scrollbar-thumb,
+.allowOverflowUCA::-webkit-scrollbar-thumb {
+  background: #b3b3b3;
+  border-radius: 10px;
+}
+
+/* === Category Buttons (Tags) === */
+.categoryContainer {
+  background-color: #828282;
+  color: white;
+  text-align: center;
+  padding: 0.4em 0.8em;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.9em;
+  user-select: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.categoryContainer:hover {
+  background-color: #555;
+}
+
+.selectedCategory {
+  background-color: #4caf50;
+}
+
+.selectedCategory:hover {
+  background-color: #388e3c;
+}
+
+.menuContainer {
+  display: flex;
+  align-items: flex-start;
+  gap: 1em;
+  width: 100%;  /* or fixed width */
+  padding: 1em;
+  border: 1px solid #ccc; /* example border */
+  border-radius: 8px;
+  box-sizing: border-box;
+  background-color: var(--secondary-color);
+}
+
+.menuContainer div{
+  margin-bottom: 0;
+}
+
+.menuPhoto {
+  flex-shrink: 0; /* prevent shrinking */
+  width: 120px;    /* fixed width */
+  aspect-ratio: 1 / 1; /* keep square */
+  background-color: var(--third-color);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.MenuInfo {
+  flex: 1;       /* take remaining space */
+  min-width: 0;  /* crucial to allow shrinking */
+  display: flex;
+  flex-direction: column;
+}
+
+.MenuInfo > div, .MenuInfo > strong {
+  margin-bottom: 0.5em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.editDelete {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 20px;  /* adjust to your icon size */
+  flex-shrink: 0;
+}
+
+.namePrice{
+  display: flex;
+}
+
+
+/* === Responsive for Smaller Screens === */
+@media (max-width: 768px) {
+  .menuFormContainer {
+    width: 70vw;
+  }
+
+  .MenuInfo{
+    font-size: 0.8em;
+  }
+
+  .namePrice{
+    flex-direction: column;
+  }
+}
+ 
