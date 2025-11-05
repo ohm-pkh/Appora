@@ -123,7 +123,7 @@ function getdayTable(days, day, toggleChange, onTimeChange) {
   const dayInfo = days.find(d => d.day === shortDay) ?? null;
 
   return (
-    <tr key={day.id}>
+    <tr key={day}>
       <td className="dayLabel">{day}</td>
       {dayInfo ? (
         <>

@@ -59,20 +59,13 @@ export default function RestaurantPage() {
             const newDay = Result.data.days;
             const newDeli = Result.data.delivery;
             const newMenu = Result.data.menu;
-
+            console.log(newData);
             originalData.current = {
                 data: newData,
                 type: newType,
                 day: newDay,
                 deli: newDeli,
                 menu: newMenu,
-            };
-            originalData.current = {
-                data: Result.data.userData,
-                type: Result.data.types,
-                day: Result.data.days,
-                deli: Result.data.delivery,
-                menu: Result.data.menu
             };
             setEmergency(newData.emergency || false);
             SetInfo(newData);
@@ -81,6 +74,7 @@ export default function RestaurantPage() {
             setDay(newDay);
             setDelivery(newDeli);
             setMenu(newMenu)
+            console.log('newMenu',newMenu);
             SetAuth(true);
         } catch {
             SetAuth(false);
@@ -221,12 +215,17 @@ export default function RestaurantPage() {
         setStatus('waiting');
         const token = Cookies.get("token")
         const form = new FormData()
+        let restaurant_status = 'Pending';
+        if(basicInfo.name && basicInfo.lat){
+            restaurant_status = 'Available';
+        }
         form.append("main_photo", basicInfo.photo)
         menus.forEach((m, i) => {
             if (m.photo instanceof File) {
                 form.append(`menu_photo_${i}`, m.photo)
             }
         })
+        console.log(basicInfo);
         const data = {
             basicInfo: {
                 name: basicInfo.name,
@@ -234,7 +233,8 @@ export default function RestaurantPage() {
                 lat: basicInfo.lat,
                 lon: basicInfo.lon,
                 location: currentLoc,
-                status: basicInfo.status,
+                status: restaurant_status,
+                photo_path:basicInfo.photo_path,
                 public_id: basicInfo.public_id
             },
             token,
@@ -245,6 +245,7 @@ export default function RestaurantPage() {
                 id: m.id,
                 name: m.name,
                 photo_path: m.photo_path,
+                public_id:m.public_id,
                 price: m.price,
                 category: m.category
             }))
@@ -258,7 +259,7 @@ export default function RestaurantPage() {
             }
         })
         setStatus("");
-        console.log(res);
+        CheckAuth();
     }
 
     useEffect(() => {
@@ -302,7 +303,7 @@ export default function RestaurantPage() {
 
             <div style={{ display: "flex", alignItems: 'center', padding: "0 1.5em", gap: "3em" }}>
 
-                <ImageInput onChange={onProfilePicChange} />
+                <ImageInput initialSrc={originalData.current?.data?.photo_path??''}onChange={onProfilePicChange} />
                 {/*Restaurant name session*/}
                 {!editing && (
                     <span role="button" tabIndex={0} onClick={startEdit}
@@ -462,7 +463,7 @@ export default function RestaurantPage() {
                         <button style={{ width: '25%' }} onClick={() => savePage()}>Save</button>
                     </>
                     :
-                    <button style={{ width: '25%' }}>Show Preview</button>
+                    <button style={{ width: '25%' }} onClick={()=>navigate('/Preview')}>Show Preview</button>
                 }
             </div>
 

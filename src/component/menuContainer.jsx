@@ -55,8 +55,8 @@ export default function MenuContainer({ menu, deleteMenu, editMenu }) {
                     display: 'flex'
                 }}>
                     Category:&nbsp;
-                    <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }} title={menu.category.map(c => c.name).join(', ')}>
-                        {menu.category.map(category => category.name).join(', ')}
+                    <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }} title={menu?.category?.map(c => c.name).join(', ')}>
+                        {menu?.category?.map(category => category.name).join(', ')}
                     </div>
                 </div>
             </div>

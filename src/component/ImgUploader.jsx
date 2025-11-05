@@ -90,3 +90,36 @@ export default function ImageInput({ initialSrc = null, size = 120, onChange = n
         </div>
     );
 }
+
+
+export function Image({ initialSrc = null, size = 120, alt = "profile image",circular=true }) {
+    const [preview, setPreview] = useState(initialSrc);
+
+    useEffect(() => {
+        setPreview(initialSrc);
+    }, [initialSrc]);
+
+
+
+    return (
+        <div className="circular-image-wrapper" style={{borderRadius:circular?'50%':'10%'}}>
+            <div
+                role="button"
+                tabIndex={0}
+                className={`circle-container`}
+                style={{ width: size, height: size, borderRadius:circular?'50%':'10%' }}
+            >
+                {preview ? (
+                    <img
+                        src={preview}
+                        alt={alt}
+                        className="circle-image"
+                        style={{ width: "100%", height: "100%" }}
+                    />
+                ) : (
+                    <div className="placeholder">Photo</div>
+                )}
+            </div>
+        </div>
+    );
+}
