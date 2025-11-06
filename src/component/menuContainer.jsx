@@ -45,7 +45,7 @@ export default function MenuContainer({ menu, deleteMenu, editMenu, allowEdit = 
 
                 <div style={{ width: '100%', marginBottom: '1em', display: 'flex' }}>
                     Description:&nbsp;
-                    <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }} title={menu.description}>
+                    <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1, textAlign:'left' }} title={menu.description}>
                         {menu.description ?? 'None'}
                     </div>
                 </div>
@@ -55,7 +55,7 @@ export default function MenuContainer({ menu, deleteMenu, editMenu, allowEdit = 
                     display: 'flex'
                 }}>
                     Category:&nbsp;
-                    <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }} title={menu?.category?.map(c => c.name).join(', ')}>
+                    <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1,textAlign:'left' }} title={menu?.category?.map(c => c.name).join(', ')}>
                         {menu?.category?.map(category => category.name).join(', ')}
                     </div>
                 </div>

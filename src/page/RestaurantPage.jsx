@@ -74,7 +74,7 @@ export default function RestaurantPage() {
             setDay(newDay);
             setDelivery(newDeli);
             setMenu(newMenu)
-            console.log('newMenu',newMenu);
+            console.log('newMenu', newMenu);
             SetAuth(true);
         } catch {
             SetAuth(false);
@@ -211,12 +211,29 @@ export default function RestaurantPage() {
         return id;
     }
 
+    async function emergencyClick() {
+        try {
+            setStatus("waiting");
+            const token = Cookies.get("token");
+            const newStatus = !isEmergency
+            setEmergency(newStatus);
+            const api = createApi('Emergency');
+            await axios.patch(api, { token, emergency: newStatus });
+        } catch (err) {
+            console.log('Fail to change emergency');
+        } finally {
+            setStatus("");
+        }
+
+
+    }
+
     async function savePage() {
         setStatus('waiting');
         const token = Cookies.get("token")
         const form = new FormData()
         let restaurant_status = 'Pending';
-        if(basicInfo.name && basicInfo.lat){
+        if (basicInfo.name && basicInfo.lat) {
             restaurant_status = 'Available';
         }
         form.append("main_photo", basicInfo.photo)
@@ -234,7 +251,7 @@ export default function RestaurantPage() {
                 lon: basicInfo.lon,
                 location: currentLoc,
                 status: restaurant_status,
-                photo_path:basicInfo.photo_path,
+                photo_path: basicInfo.photo_path,
                 public_id: basicInfo.public_id
             },
             token,
@@ -245,7 +262,7 @@ export default function RestaurantPage() {
                 id: m.id,
                 name: m.name,
                 photo_path: m.photo_path,
-                public_id:m.public_id,
+                public_id: m.public_id,
                 price: m.price,
                 category: m.category
             }))
@@ -303,7 +320,7 @@ export default function RestaurantPage() {
 
             <div style={{ display: "flex", alignItems: 'center', padding: "0 1.5em", gap: "3em" }}>
 
-                <ImageInput initialSrc={originalData.current?.data?.photo_path??''}onChange={onProfilePicChange} />
+                <ImageInput initialSrc={originalData.current?.data?.photo_path ?? ''} onChange={onProfilePicChange} />
                 {/*Restaurant name session*/}
                 {!editing && (
                     <span role="button" tabIndex={0} onClick={startEdit}
@@ -357,7 +374,7 @@ export default function RestaurantPage() {
                 <div className='unchangeInfo Info allowOverflow'>
                     {types.length !== 0 ? types.map((type, index) => (
                         <div key={index} className="typeContainer" style={{ height: '1.5em' }}>
-                            <p style={{margin:'0'}}>
+                            <p style={{ margin: '0' }}>
                                 {type.type}
                             </p>
                         </div>
@@ -409,8 +426,8 @@ export default function RestaurantPage() {
                     <div className="unchangeInfo Info allowOverflow" style={{ width: '100%', alignItems: 'center', justifyContent: 'space-around' }}>
                         {currentDay && !isEmergency ? <><div>Today: {currentDay.day}</div><div>Open: {currentDay.open}</div><div>Close: {currentDay.close}</div></> : "Close"}
                     </div>
-                    <button style={{ height: '100%' }} onClick={() => setEmergency(!isEmergency)}>
-                        Emergency Close
+                    <button style={{ height: '100%' }} onClick={() => emergencyClick()}>
+                        {!isEmergency ? 'Emergency Close' : 'Cancle Emergency'}
                     </button>
                 </div>
             </div>
@@ -425,7 +442,7 @@ export default function RestaurantPage() {
                 </div>
 
 
-                <div className="unchangeInfo Info allowOverflowy" >
+                <div className="unchangeInfo Info allowOverflowy">
                     {delivery.length > 0 ?
                         delivery.map((deli) => (
                             <DeliveryContainer key={deli.id} deli={deli} onUpdate={updateDeli} onDelete={deleteDeli} />
@@ -465,7 +482,7 @@ export default function RestaurantPage() {
                         <button style={{ width: '25%' }} onClick={() => savePage()}>Save</button>
                     </>
                     :
-                    <button style={{ width: '25%' }} onClick={()=>navigate('/Preview')}>Show Preview</button>
+                    <button style={{ width: '25%' }} onClick={() => navigate('/Preview')}>Show Preview</button>
                 }
             </div>
 

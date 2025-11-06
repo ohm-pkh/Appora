@@ -181,7 +181,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .allowOverflowy div{
-  margin-bottom: 5em;
+  margin-bottom: 0.5em;
 }
 
 .allowOverflowy div:last-of-type{
@@ -352,6 +352,7 @@ label {
 
 .namePrice{
   display: flex;
+  text-align: left;
 }
 
 

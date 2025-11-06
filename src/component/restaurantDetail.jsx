@@ -6,6 +6,7 @@ import emailSvg from '../assets/emailSvg.svg';
 import locationSvg from '../assets/locationSvg.svg';
 import timeSvg from '../assets/timeSvg.svg';
 import deliverySvg from '../assets/deliverySvg.svg'
+import MenuContainer from "./menuContainer";
 
 export default function RestaurantDetail({ status, info, types, currentDay, location, days, isEmergency, delivery, menus }) {
     console.log(currentDay)
@@ -33,18 +34,18 @@ export default function RestaurantDetail({ status, info, types, currentDay, loca
         )
     }
 
-    function ListDelivery(){
-        return(
+    function ListDelivery() {
+        return (
             <table>
                 <tbody>
-                    {delivery?delivery.map(deli=>{
-                        return(
-                            <tr>
-                                <td style={{width:'5.5em',maxWidth:'5.5em'}}><h4 style={{margin:'0'}}>{deli.name}:</h4></td>
-                                <td onClick={()=>{window.open(deli.link, "_blank");}} style={{cursor:'pointer',wordWrap:'break-word'}}>{deli.link}</td>
+                    {delivery ? delivery.map(deli => {
+                        return (
+                            <tr key={deli.name}>
+                                <td style={{ width: '5.5em', maxWidth: '5.5em' }}><h4 style={{ margin: '0' }}>{deli.name}:</h4></td>
+                                <td onClick={() => { window.open(deli.link, "_blank"); }} style={{ cursor: 'pointer', wordWrap: 'break-word' }}>{deli.link}</td>
                             </tr>
                         )
-                    }):
+                    }) :
                         'None'
                     }
                 </tbody>
@@ -140,9 +141,15 @@ export default function RestaurantDetail({ status, info, types, currentDay, loca
                     </div>
                 </div>
                 <hr />
-                <div className="menuList">
+                <div className="menuList" style={{textAlign:'left',margin:'0 0.2em'}}>
                     <h3>Menu List</h3>
-
+                    {menus.length > 0 ?
+                        menus.map((menu) => (
+                            <MenuContainer key={menu.id} menu={menu} allowEdit={false}/>
+                        ))
+                        :
+                        "None"
+                    }
                 </div>
 
             </div>
