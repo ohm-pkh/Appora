@@ -12,20 +12,56 @@
     border-top: 1px solid black;
     margin-top: -2em;
     border-radius: 1em;
+    padding: 0 1em;
 
 }
 
 .typeDetailContainer{
     display: flex;
-    padding: 0 2em;
+    padding: 0;
     gap:1em;
     overflow-x: scroll;
+    max-width: 95vw;
+    box-sizing: border-box;
+    margin: 0 auto;
 }
 
 
 .typeDetailContainer::-webkit-scrollbar {
-  display: none;
+  height: 5px;
 }
+
+.goBackButton{
+  background:none;
+  display:flex;
+  position:absolute;
+  top:1em;
+  color:black;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.goBackButton:active{
+  border: none;
+}
+
+.dayDetailTable {
+  border-collapse: collapse;
+  border-radius: 8px;
+  background-color: #fff;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+  table-layout: fixed;
+}
+
+.dayDetailTable th,
+.dayDetailTable td {
+  padding: 0.4em 4em 0 0;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
 
 /* === Responsive for Smaller Screens === */
 @media (max-width: 768px) {

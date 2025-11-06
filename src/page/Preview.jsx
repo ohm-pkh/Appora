@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createApi } from "../function/api";
 import Cookies from "js-cookie";
@@ -7,7 +7,7 @@ import WaitingOverlay from "../component/WaitingOverlay";
 import RestaurantDetail from "../component/restaurantDetail";
 const dayArr = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-export default function Preview(){
+export default function Preview() {
   const [auth, SetAuth] = useState(null); // null first
   const [basicInfo, SetInfo] = useState({});
   const [types, setType] = useState([]);
@@ -22,7 +22,7 @@ export default function Preview(){
 
   useEffect(() => {
     if (auth === false) navigate("/Login");
-  }, [navigate,auth]);
+  }, [navigate, auth]);
 
   const CheckAuth = async () => {
     try {
@@ -64,16 +64,26 @@ export default function Preview(){
     const day = d.getDay()
     setCurrentDay(days.find(d => d.day === dayArr[day]) ?? null);
   }, [days]);
-
-  if (auth !== true) return null; // block until resolved
+ 
 
   return (
     <div className="fullPageContainer">
-      <RestaurantDetail status="Preview" info={basicInfo} types={types}
-        currentDay={currentDay} location={currentLoc} isEmergency={isEmergency}
-        delivery={delivery} menus={menus}
-      />
+      {auth === true ? (
+        <RestaurantDetail
+          status="Preview"
+          info={basicInfo}
+          days={days}
+          types={types}
+          currentDay={currentDay}
+          location={currentLoc}
+          isEmergency={isEmergency}
+          delivery={delivery}
+          menus={menus}
+        />
+      ) : null}
+
       <WaitingOverlay status={status} />
     </div>
-  );
+  )
+
 }

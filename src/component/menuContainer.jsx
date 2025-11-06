@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import deleteSvg from '../assets/deleteSvg.svg'
 import editSvg from '../assets/editSvg.svg'
 
-export default function MenuContainer({ menu, deleteMenu, editMenu }) {
+export default function MenuContainer({ menu, deleteMenu, editMenu, allowEdit = true }) {
     const [preview, setPreview] = useState();
 
     const findPhoto = useCallback(async () => {
@@ -23,7 +23,7 @@ export default function MenuContainer({ menu, deleteMenu, editMenu }) {
         findPhoto();
     }, [findPhoto])
     return (
-        <div className="menuContainer" style={{marginBottom:'1em'}}>
+        <div className="menuContainer" style={{ marginBottom: '1em' }}>
             <div className="menuPhoto">
                 {preview ? (
                     <img
@@ -39,8 +39,8 @@ export default function MenuContainer({ menu, deleteMenu, editMenu }) {
 
             <div className="MenuInfo">
                 <div className="namePrice">
-                    <strong style={{width:'50%',height: '1em', marginBottom: '1em', }}>{menu.name}</strong>
-                    <div style={{width:'50%',height: '1em', marginBottom: '1em' }}>Price: {menu.price} THB</div>
+                    <strong style={{ width: '50%', height: '1em', marginBottom: '1em', }}>{menu.name}</strong>
+                    <div style={{ width: '50%', height: '1em', marginBottom: '1em' }}>Price: {menu.price} THB</div>
                 </div>
 
                 <div style={{ width: '100%', marginBottom: '1em', display: 'flex' }}>
@@ -60,14 +60,19 @@ export default function MenuContainer({ menu, deleteMenu, editMenu }) {
                     </div>
                 </div>
             </div>
-            <div className="editDelete" >
-                <div onClick={() => editMenu()} style={{ height: '50%', marginBottom: '0em' }}>
-                    <img src={editSvg} alt="edit" style={{ width: '100%', cursor: 'pointer' }} />
+            {allowEdit ?
+                <div className="editDelete" >
+                    <div onClick={() => editMenu()} style={{ height: '50%', marginBottom: '0em' }}>
+                        <img src={editSvg} alt="edit" style={{ width: '100%', cursor: 'pointer' }} />
+                    </div>
+                    <div onClick={() => deleteMenu(menu.id)} style={{ height: '50%', marginBottom: '0em', placeContent: 'end' }}>
+                        <img src={deleteSvg} alt="delete" style={{ width: '100%', cursor: 'pointer' }} />
+                    </div>
                 </div>
-                <div onClick={()=>deleteMenu(menu.id)} style={{ height: '50%', marginBottom: '0em', placeContent: 'end' }}>
-                    <img src={deleteSvg} alt="delete" style={{ width: '100%', cursor: 'pointer' }} />
-                </div>
-            </div>
+                :
+                ''
+            }
+
         </div>
     )
 }

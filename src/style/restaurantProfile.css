@@ -54,7 +54,7 @@ a.link{
 .typeContainer{
     background-color: #828282;
     color: var(--third-color);
-    width: fit-content;
+    min-width: fit-content;
     padding: 0 1em;
     border-radius: 10px;
 }

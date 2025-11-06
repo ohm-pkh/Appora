@@ -4,7 +4,9 @@ import '../style/Overlay.css'
 
 const WaitingOverlay = ({ status }) => {
   if (status !== "waiting") return null; // show only when waiting
-
+  if(status === 'waiting'){
+    console.log('onWaiting');
+  }
   return (
     <div className="overlayBackground">
       <div

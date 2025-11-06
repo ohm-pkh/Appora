@@ -357,7 +357,9 @@ export default function RestaurantPage() {
                 <div className='unchangeInfo Info allowOverflow'>
                     {types.length !== 0 ? types.map((type, index) => (
                         <div key={index} className="typeContainer" style={{ height: '1.5em' }}>
-                            {type.type}
+                            <p style={{margin:'0'}}>
+                                {type.type}
+                            </p>
                         </div>
                     ))
                         : 'Not define'
