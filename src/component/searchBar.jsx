@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import searchSvg from '../assets/searchSvg.svg'
 
-export default function SearchBar({ onSearch }) {
+export default function SearchBar({ onSearch,onChange }) {
     const [q, setQ] = useState("");
 
     const doSearch = (e) => {
         e.preventDefault();
-        onSearch(q.trim());
+        onSearch(q);
     };
+
+    useEffect(()=>{
+        onChange(q);
+    },[onChange,q])
 
     return (
         <form onSubmit={doSearch} className="searchBar">

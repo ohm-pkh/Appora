@@ -17,6 +17,7 @@ export default function Home() {
     const [restaurants, setRestaurants] = useState([]);
     const [currentLocation, setCurrentLocation] = useState({lat:null,lon:null});
     const [overlay, setOverlay] = useState({ status: false });
+    const [search, setSearch] = useState('');
     const navigate = useNavigate();
 
     const CheckAuth = async () => {
@@ -49,7 +50,7 @@ export default function Home() {
         try {
             setStatus('waiting')
             const api = createApi('Restaurants');
-            const result = await axios.get(api);
+            const result = await axios.get(api,{params:{search}});
             console.log(result.data);
             setRestaurants(result.data);
         } catch {
@@ -80,6 +81,10 @@ export default function Home() {
         setOverlay({ status: true, action: act });
     }
 
+    function onSearch(){
+        getRestaurant();
+    }
+
     useEffect(() => {
         CheckAuth();
         getRestaurant();
@@ -90,7 +95,7 @@ export default function Home() {
         <div className="fullPageContainer" style={{ gap: '0' }}>
             <Nav auth={auth} doLogout={Logout} />
 
-            <SearchBar />
+            <SearchBar onSearch={onSearch} onChange={(text)=>setSearch(text.trim())}/>
 
             <div className='restaurantMainContainer'>
                 {restaurants && restaurants.length > 0 ? (
