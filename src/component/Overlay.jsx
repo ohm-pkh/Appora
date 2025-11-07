@@ -1,4 +1,5 @@
 import { TypeInsert, LocChange, DayTable,MenuForm } from "./restaurantInput";
+import { CloseBtn } from "./closeSaveOverlay";
 
 function overlayType(type, params) {
 
@@ -39,6 +40,13 @@ function overlayType(type, params) {
                 <MenuForm onClose={params.onClose} onSave={params.onSaveMenuChanage} currentNewMenu={params.currentMenu} ></MenuForm>
             </>
         )
+    }else if(type === 'Unauth'){
+        return(
+            <>
+                <h3 style={{marginBottom:'0'}}>Please Login</h3>
+                <p style={{marginTop:'0'}}>You must Login before use this function</p>
+            </>
+        )
     }
     else {
         return null;
@@ -48,6 +56,7 @@ function overlayType(type, params) {
 export default function OverlayRestaurantPage(params) {
     const status = params.status
     const action = params.action
+    console.log(params);
     if (status !== true) return null; // show only when waiting
 
     return (
@@ -67,6 +76,42 @@ export default function OverlayRestaurantPage(params) {
 
                 {overlayType(action, params)}
 
+
+            </div>
+        </div>
+    );
+}
+
+export function OverlayHomePage(params) {
+    const status = params.status
+    const action = params.action
+    console.log(params);
+    if (status !== true) return null; // show only when waiting
+
+    return (
+        <div className="overlayBackground">
+            <div
+                style={{
+                    backgroundColor: "#fff",
+                    padding: "10px 0 0 0",
+                    borderRadius: "8px",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+                    display: "flex",
+                    flexDirection: "column",
+                    maxWidth: '50vw',
+                    alignItems: "center",
+                }}
+            >
+                <div style={{margin:'0 2em'}}>
+                    {overlayType(action, params)}
+                </div>
+                
+                <div className="homeOverlay">
+                    {CloseBtn(params.onClose)}
+                    <div className="verticalLine"/>
+                    <button onClick={()=>params.Go('/Login')}>Login</button>
+                </div>
+                
 
             </div>
         </div>
