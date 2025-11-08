@@ -1,5 +1,6 @@
 import { TypeInsert, LocChange, DayTable,MenuForm } from "./restaurantInput";
 import { CloseBtn } from "./closeSaveOverlay";
+import Filter from "./filter";
 
 function overlayType(type, params) {
 
@@ -47,6 +48,8 @@ function overlayType(type, params) {
                 <p style={{marginTop:'0'}}>You must Login before use this function</p>
             </>
         )
+    }else if(type === 'Filter'){
+        return <Filter types={params.types} categories={params.categories} filter={params.filter} onSave={params.onSave} onClose={params.onClose}/>
     }
     else {
         return null;
@@ -105,14 +108,39 @@ export function OverlayHomePage(params) {
                 <div style={{margin:'0 2em'}}>
                     {overlayType(action, params)}
                 </div>
-                
-                <div className="homeOverlay">
-                    {CloseBtn(params.onClose)}
-                    <div className="verticalLine"/>
-                    <button onClick={()=>params.Go('/Login')}>Login</button>
-                </div>
-                
+            
 
+            </div>
+        </div>
+    );
+}
+
+export function FilterOverlay(params){
+    const status = params.status
+    const action = params.action
+    console.log(params);
+    if (status !== true) return null; // show only when waiting
+
+    return (
+        <div className="overlayBackground">
+            <div
+                style={{
+                    backgroundColor: "#fff",
+                    padding: "10px 1em 0 1em",
+                    borderRadius: "8px",
+                    display: "flex",
+                    flexDirection: "column",
+                    maxWidth: 'calc(100vw-1em)',
+                    alignItems: "start",
+                    position:'fixed',
+                    bottom:'0',
+                    boxSizing:'border-box',
+
+                }}
+            >
+                <div style={{margin:'0 0.5em'}}>
+                    {overlayType(action, params)}
+                </div>
             </div>
         </div>
     );

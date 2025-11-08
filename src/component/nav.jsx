@@ -3,7 +3,7 @@ import cartSvg from '../assets/cartSvg.svg'
 import filterSvg from '../assets/filterSvg.svg'
 import { useNavigate } from 'react-router-dom'
 
-export function Nav({auth = false,doLogout}) {
+export function Nav({auth = false,doLogout,openFilter}) {
     const navigate = useNavigate();
     
     function Login(){
@@ -20,7 +20,7 @@ export function Nav({auth = false,doLogout}) {
                 <span>
                     <img src={cartSvg} alt="cart" />
                 </span>
-                <span>
+                <span onClick={()=>openFilter()}>
                     <img src={filterSvg} alt="filter" />
                 </span>
             </div>
