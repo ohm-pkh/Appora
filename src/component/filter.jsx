@@ -6,11 +6,16 @@ import { useEffect, useState } from 'react'
 export default function Filter({ types, categories, filter,onSave,onClose }) {
     const defaultFilter = { type: [], category: [], price: [], distance: null };
 
-    const [newDistance, setNewDistance] = useState(filter.distance);
+    const [newDistance, setNewDistance] = useState(filter.distance??null);
     const [currentFilter, setCurrentFilter] = useState({
         ...defaultFilter,
         ...(filter ?? {}),
     });
+
+    function onClear(){
+        setCurrentFilter(defaultFilter);
+        setNewDistance(null);
+    }
 
     useEffect(() => {
         setCurrentFilter(prev => ({
@@ -125,6 +130,7 @@ export default function Filter({ types, categories, filter,onSave,onClose }) {
                 <div style={{display:'flex',gap:'1em',justifyContent:'center',paddingBottom:'1em'}}>
                     {CloseBtn(onClose)}
                     {SaveBtn(onSave,onClose, currentFilter)}
+                    <button onClick={onClear}>Clear</button>
                 </div>
             </div>
             
