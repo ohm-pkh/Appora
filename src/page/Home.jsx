@@ -135,6 +135,34 @@ export default function Home() {
         setFilter(new_filter);
     }
 
+    async function unCart(id){
+        try{
+            setStatus('waiting');
+            const token = Cookies.get('token');
+            const api = createApi('Cart');
+            await axios.delete(api,{params:{token,restaurant_id:id}});
+            setCart(prev => prev.filter(cartId => cartId !== id));
+        }catch(e){
+            console.log(e);
+        }finally{
+            setStatus('');
+        }
+    }
+
+    async function addCart(id){
+        try{
+            setStatus('waiting');
+            const token = Cookies.get('token');
+            const api = createApi('Cart');
+            await axios.post(api,{token,restaurant_id:id});
+            setCart(prev=>[...prev,id]);
+        }catch(e){
+            console.log(e);
+        }finally{
+            setStatus('');
+        }
+    }
+
     async function getCart(){
         if(auth===false) return setCart([]);
         try{
@@ -143,20 +171,28 @@ export default function Home() {
             const api = createApi('Cart');
             const result = await axios.get(api,{params:{token}});
             console.log('cart:',result);
-            setCart(result.data.cartItem);
-            if(result.data.cartItems.length>0){
-                setIsCart(true);
-            }else{
-                setIsCart(false);
-            }
+            setCart(result?.data?.cartItems??[]);
         }catch(e){
             console.log(e);
         }finally{
             setStatus('');
         }
     }
+
     useEffect(()=>{
-        getCart();
+        console.log('Cart has been change:',cart);
+        if(!cart || cart.length === 0) {
+            setIsCart(false);
+        }else{
+            setIsCart(true)
+        }
+    },[cart])
+
+    useEffect(()=>{
+        if(auth===true){
+            getCart();
+        }
+        
     },[auth])
 
     useEffect(()=>{
@@ -165,7 +201,17 @@ export default function Home() {
         }else{
             setIsFilter(true);
         }
-    },[filter])
+    },[filter]);
+
+
+    function cartOnClick(restaurant_id,isCarting) {
+        if (!auth) return StartOverlay('Unauth');
+        if(isCarting){
+            addCart(restaurant_id);
+        }else{
+            unCart(restaurant_id);
+        }
+    }
 
     useEffect(() => {
         CheckAuth();
@@ -185,7 +231,7 @@ export default function Home() {
             <div className='restaurantMainContainer'>
                 {restaurants && restaurants.length > 0 ? (
                     restaurants.map(restaurant => (
-                        <RestaurantContainer auth={auth} data={restaurant} currentLocation={currentLocation} key={restaurant.id} onContainerClick={(id) => navToRestaurantDetail(id)} setOverlay={(act) => StartOverlay(act)} filter={filter}/>
+                        <RestaurantContainer cartOnClick={cartOnClick} data={restaurant} currentLocation={currentLocation} key={restaurant.id} onContainerClick={(id) => navToRestaurantDetail(id)} filter={filter} cart={cart} unCart={unCart}/>
                     ))
                 ) :
                     <RestaurantNotFound />

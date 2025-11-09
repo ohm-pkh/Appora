@@ -96,6 +96,7 @@
     justify-content: space-evenly;
     gap:2px;
     height: 50px;
+    color: #4285F4;
 }
 
 .homeOverlay button{
