@@ -18,7 +18,7 @@ export function BuildContainer({ data, currentLocation, onContainerClick, cartOn
                 <div className="namePrice cardInfoDetail">
                     <strong style={{ width: '50%', height: '1em', marginBottom: '0.5em', }}>{data.name}</strong>
                     <div style={{ width: '50%', height: '1em', marginBottom: '0.5em' }}>Price: {data.min_price === data.max_price ? data.min_price : data.min_price + ' - ' + data.max_price} ฿</div>
-                    <div style={{ width: '50%', height: '1em', marginBottom: '0.5em' }}>Distance: {currentLocation.lat ? parseInt(distanceKm(currentLocation.lat, currentLocation.lon, data.lat, data.lon)) : '-'} Km</div>
+                    <div style={{ width: '50%', height: '1em', marginBottom: '0.5em' }}>Distance: {currentLocation.lat ? Math.round(distanceKm(currentLocation.lat, currentLocation.lon, data.lat, data.lon)) : '-'} Km</div>
                 </div>
 
                 <div className="cardInfoDetail">
@@ -75,11 +75,12 @@ function matchFilter(data, filter, currentLocation) {
 
 export function RestaurantContainer({ data, currentLocation, onContainerClick, cartOnClick, filter, cart }) {
     console.log(data, filter);
-    console.log('cart', cart);
-    const [isInCart, setIsInCart] = useState(cart.includes(data.id));
+    console.log('cart', cart,"data.id",data.id,'cart.some(item => item.restaurant_id === data.id)',cart.some(item => item.restaurant_id === data.id));
+    const [isInCart, setIsInCart] = useState(cart.some(item => item.restaurant_id === data.id));
 
     useEffect(() => {
-        setIsInCart(cart.includes(data.id));
+        setIsInCart(cart.some(item => item.restaurant_id === data.id));
+        console.log('cart',cart,'data.id',data.id);
         console.log("isIncart",isInCart)
     }, [cart, data.id]);
 
