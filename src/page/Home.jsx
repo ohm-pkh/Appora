@@ -21,6 +21,9 @@ export default function Home() {
     const [types, setTypes] = useState([]);
     const [categories, setCategory] = useState([]);
     const [filter, setFilter] = useState({ type: [], category: [], price: null, distance: null });
+    const [isFilter,setIsFilter] = useState(false);
+    const [cart,setCart] = useState([]);
+    const [isCart,setIsCart] = useState(false);
     const navigate = useNavigate();
 
     const CheckAuth = async () => {
@@ -132,6 +135,38 @@ export default function Home() {
         setFilter(new_filter);
     }
 
+    async function getCart(){
+        if(auth===false) return setCart([]);
+        try{
+            setStatus('waiting');
+            const token = Cookies.get('token');
+            const api = createApi('Cart');
+            const result = await axios.get(api,{params:{token}});
+            console.log('cart:',result);
+            setCart(result.data.cartItem);
+            if(result.data.cartItems.length>0){
+                setIsCart(true);
+            }else{
+                setIsCart(false);
+            }
+        }catch(e){
+            console.log(e);
+        }finally{
+            setStatus('');
+        }
+    }
+    useEffect(()=>{
+        getCart();
+    },[auth])
+
+    useEffect(()=>{
+        if(filter.type.length===0 && filter.category.length===0 && filter.price === null && filter.distance === null){
+            setIsFilter(false);
+        }else{
+            setIsFilter(true);
+        }
+    },[filter])
+
     useEffect(() => {
         CheckAuth();
         getRestaurant();
@@ -143,7 +178,7 @@ export default function Home() {
 
     return (
         <div className="fullPageContainer" style={{ gap: '0' }}>
-            <Nav auth={auth} doLogout={Logout} openFilter={()=>StartOverlay('Filter')}/>
+            <Nav auth={auth} doLogout={Logout} openFilter={()=>StartOverlay('Filter')} isCart={isCart} isFilter={isFilter}/>
 
             <SearchBar onSearch={onSearch} onChange={(text) => setSearch(text.trim())} />
 

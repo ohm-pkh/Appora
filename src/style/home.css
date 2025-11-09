@@ -27,6 +27,7 @@
 
 .navBar span{
     cursor: pointer;
+    position: relative;
 }
 
 .restaurantMainContainer{
