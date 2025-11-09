@@ -20,7 +20,7 @@ export default function Home() {
     const [search, setSearch] = useState('');
     const [types, setTypes] = useState([]);
     const [categories, setCategory] = useState([]);
-    const [filter, setFilter] = useState({ type: [], category: [], price: [], distance: null });
+    const [filter, setFilter] = useState({ type: [], category: [], price: null, distance: null });
     const navigate = useNavigate();
 
     const CheckAuth = async () => {
@@ -157,8 +157,11 @@ export default function Home() {
                 }
 
             </div>
-
-            <FilterOverlay status={overlay.status} action={overlay.action} onClose={() => setOverlay({ status: false })} Go={(path) => navigate(path)} types={types} categories={categories} filter={filter} onSave={saveFilter}/>
+            {overlay.status===true&&overlay.action==='Filter'?<FilterOverlay status={overlay.status} action={overlay.action} onClose={() => setOverlay({ status: false })} Go={(path) => navigate(path)} types={types} categories={categories} filter={filter} onSave={saveFilter}/>
+                :<OverlayHomePage status={overlay.status} action={overlay.action} onClose={() => setOverlay({ status: false })} Go={(path) => navigate(path)} types={types} categories={categories} filter={filter} onSave={saveFilter}/>
+            }
+            
+            
             <WaitingOverlay status={status} />
         </div>
     )

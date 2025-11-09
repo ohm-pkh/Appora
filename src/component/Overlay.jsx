@@ -108,8 +108,12 @@ export function OverlayHomePage(params) {
                 <div style={{margin:'0 2em'}}>
                     {overlayType(action, params)}
                 </div>
-            
-
+                
+                <div className="homeOverlay">
+                    {CloseBtn(params.onClose)}
+                    <div className="verticalLine"/>
+                    <button onClick={()=>params.Go('/Login')}>Login</button>
+                </div>
             </div>
         </div>
     );

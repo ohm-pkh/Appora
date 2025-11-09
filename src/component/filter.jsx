@@ -1,18 +1,18 @@
 import '../style/filter.css'
-import { SaveBtn,CloseBtn } from './closeSaveOverlay';
+import { SaveBtn, CloseBtn } from './closeSaveOverlay';
 import { useEffect, useState } from 'react'
 
 
-export default function Filter({ types, categories, filter,onSave,onClose }) {
-    const defaultFilter = { type: [], category: [], price: [], distance: null };
+export default function Filter({ types, categories, filter, onSave, onClose }) {
+    const defaultFilter = { type: [], category: [], price: null, distance: null };
 
-    const [newDistance, setNewDistance] = useState(filter.distance??null);
+    const [newDistance, setNewDistance] = useState(filter.distance ?? null);
     const [currentFilter, setCurrentFilter] = useState({
         ...defaultFilter,
         ...(filter ?? {}),
     });
 
-    function onClear(){
+    function onClear() {
         setCurrentFilter(defaultFilter);
         setNewDistance(null);
     }
@@ -91,7 +91,7 @@ export default function Filter({ types, categories, filter,onSave,onClose }) {
                     <h3 style={{ textAlign: "left", paddingLeft: "1.5em" }}>Price</h3>
                     <div className="filterOption" style={{ justifyContent: "center", gap: "1em" }}>
                         {[1, 2, 3, 4, 5].map((i) => {
-                            const selected = currentFilter?.price?.includes(i);
+                            const selected = currentFilter?.price === i; // check single value
                             return (
                                 <div
                                     key={i}
@@ -99,9 +99,7 @@ export default function Filter({ types, categories, filter,onSave,onClose }) {
                                     onClick={() =>
                                         setCurrentFilter((prev) => ({
                                             ...prev,
-                                            price: selected
-                                                ? (prev.price ?? []).filter((id) => id !== i)
-                                                : [...(prev.price ?? []), i],
+                                            price: prev.price === i ? null : i
                                         }))
                                     }
                                 >
@@ -116,24 +114,24 @@ export default function Filter({ types, categories, filter,onSave,onClose }) {
 
                 {/* DISTANCE */}
                 <div>
-                    <h3 style={{ textAlign: "left", paddingLeft: "1.5em" }}> Distance ({newDistance || newDistance >= 0 ? newDistance : "undefine"}) km
+                    <h3 style={{ textAlign: "left", paddingLeft: "1.5em" }}> Distance {newDistance || newDistance >= 0 ? newDistance : "undefine"} km
                     </h3>
                     <input
                         type="range"
                         name="distance"
                         id="distanceInput"
-                        value={newDistance*20}
+                        value={newDistance * 20}
                         onChange={(e) => setNewDistance(Math.ceil(e.target.value / 20))}
                     />
                 </div>
 
-                <div style={{display:'flex',gap:'1em',justifyContent:'center',paddingBottom:'1em'}}>
+                <div style={{ display: 'flex', gap: '1em', justifyContent: 'center', paddingBottom: '1em' }}>
                     {CloseBtn(onClose)}
-                    {SaveBtn(onSave,onClose, currentFilter)}
+                    {SaveBtn(onSave, onClose, currentFilter)}
                     <button onClick={onClear}>Clear</button>
                 </div>
             </div>
-            
+
         </>
     );
 }
