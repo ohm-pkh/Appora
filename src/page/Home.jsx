@@ -70,9 +70,7 @@ export default function Home() {
     }
 
     function Logout() {
-        Cookies.remove('token');
-        localStorage.removeItem('Transport');
-        SetAuth(false);
+        StartOverlay('Logout');
     }
 
     function getLocation() {
@@ -273,11 +271,15 @@ export default function Home() {
             <SearchBar onSearch={onSearch} onChange={(text) => setSearch(text.trim())} />
 
             <div className='restaurantMainContainer'>
-                {restaurants && restaurants.length > 0 ? (
+                {
+                
+                restaurants && restaurants.length > 0 ? 
+                    (
                     restaurants.map(restaurant => (
                         <RestaurantContainer cartOnClick={cartOnClick} data={restaurant} currentLocation={currentLocation} key={restaurant.id} onContainerClick={(id) => navToRestaurantDetail(id)} filter={filter} cart={cart} unCart={unCart} />
                     ))
-                ) :
+                    
+                ):
                     <RestaurantNotFound />
                 }
 

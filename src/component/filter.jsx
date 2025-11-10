@@ -3,10 +3,10 @@ import { SaveBtn, CloseBtn } from './closeSaveOverlay';
 import { useEffect, useState } from 'react'
 
 
-export default function Filter({ types, categories, filter, onSave, onClose }) {
-    const defaultFilter = { type: [], category: [], price: null, distance: null };
-
-    const [newDistance, setNewDistance] = useState(filter.distance ?? null);
+export default function Filter({ types, categories, filter, onSave, onClose}) {
+    const defaultFilter = { type: [], category: [], price: null, distance: onClose?null:5 };
+    console.log('filter distance',filter.distance);
+    const [newDistance, setNewDistance] = useState(filter.distance ?? (onClose?null:5));
     const [currentFilter, setCurrentFilter] = useState({
         ...defaultFilter,
         ...(filter ?? {}),
@@ -14,7 +14,7 @@ export default function Filter({ types, categories, filter, onSave, onClose }) {
 
     function onClear() {
         setCurrentFilter(defaultFilter);
-        setNewDistance(null);
+        setNewDistance(onClose?null:5);
     }
 
     useEffect(() => {
@@ -126,8 +126,8 @@ export default function Filter({ types, categories, filter, onSave, onClose }) {
                 </div>
 
                 <div style={{ display: 'flex', gap: '1em', justifyContent: 'center', paddingBottom: '1em' }}>
-                    {CloseBtn(onClose)}
-                    {SaveBtn(onSave, onClose, currentFilter)}
+                    {onClose?CloseBtn(onClose):''}
+                    {SaveBtn(onSave,onClose??null, currentFilter)}
                     <button onClick={onClear}>Clear</button>
                 </div>
             </div>

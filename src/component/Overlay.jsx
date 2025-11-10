@@ -1,5 +1,5 @@
 import { TypeInsert, LocChange, DayTable,MenuForm } from "./restaurantInput";
-import { InCart } from "./randomResult";
+import { InCart, NormCart } from "./randomResult";
 import { CloseBtn } from "./closeSaveOverlay";
 import Filter from "./filter";
 
@@ -49,12 +49,27 @@ function overlayType(type, params) {
                 <p style={{marginTop:'0'}}>You must Login before use this function</p>
             </>
         )
+    }else if(type === 'Logout'){
+        return(
+            <>
+                <h3 style={{marginBottom:'0'}}>Confirm Logout</h3>
+                <p style={{marginTop:'0'}}>After you logout, You will need to log in again to access your account.</p>
+            </>
+        )
     }else if(type === 'Filter'){
-        return <Filter types={params.types} categories={params.categories} filter={params.filter} onSave={params.onSave} onClose={params.onClose}/>
+        return (
+            <div className="overFilterContainer">
+                <Filter types={params.types} categories={params.categories} filter={params.filter} onSave={params.onSave} onClose={params.onClose}/>
+            </div>
+        )
     }
     else if(type === 'inCartRandom'){
         console.log('test in cart random',params.data)
         return <InCart data={params.data} onClose={params.onClose} Location={params.currentLocation}/>
+    }
+    else if(type === 'allRandom'){
+        console.log('test in cart random',params.data)
+        return <NormCart data={params.data} onClose={params.onClose} Location={params.currentLocation}/>
     }
     else {
         return null;
@@ -117,7 +132,7 @@ export function OverlayHomePage(params) {
                 <div className="homeOverlay">
                     {CloseBtn(params.onClose)}
                     <div className="verticalLine"/>
-                    <button onClick={()=>params.Go('/Login')}>Login</button>
+                    <button onClick={()=>params.Go('/Login')}>{action==='Logout'?'Logout':'Login'}</button>
                 </div>
             </div>
         </div>
