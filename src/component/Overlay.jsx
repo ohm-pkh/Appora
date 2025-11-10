@@ -1,4 +1,5 @@
 import { TypeInsert, LocChange, DayTable,MenuForm } from "./restaurantInput";
+import { InCart } from "./randomResult";
 import { CloseBtn } from "./closeSaveOverlay";
 import Filter from "./filter";
 
@@ -50,6 +51,10 @@ function overlayType(type, params) {
         )
     }else if(type === 'Filter'){
         return <Filter types={params.types} categories={params.categories} filter={params.filter} onSave={params.onSave} onClose={params.onClose}/>
+    }
+    else if(type === 'inCartRandom'){
+        console.log('test in cart random',params.data)
+        return <InCart data={params.data} onClose={params.onClose} Location={params.currentLocation}/>
     }
     else {
         return null;

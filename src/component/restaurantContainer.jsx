@@ -6,8 +6,9 @@ import cartRemove from '../assets/cartRemove.svg'
 import { arrInArrCheck } from "../function/arrInArrCheck"
 import { useState, useEffect } from "react"
 
-export function BuildContainer({ data, currentLocation, onContainerClick, cartOnClick, isInCart }) {
-    console.log('isIncart in container', isInCart); 
+
+export function BuildContainer({ data, currentLocation, onContainerClick, cartOnClick, isInCart, isEditCartAllow = true }) {
+    console.log('isIncart in container', isInCart);
     return (
         <div className="restaurantContainer" key={data.id}>
             <div onClick={() => onContainerClick(data.id)}>
@@ -35,14 +36,19 @@ export function BuildContainer({ data, currentLocation, onContainerClick, cartOn
                 </div>
             </div>
 
-            <div className="cartBtn addCart" onClick={() => cartOnClick(data.id, !isInCart)}>
-                {isInCart ?
-                    <img src={cartRemove} alt="cartRemove" />
-                    :
-                    <img src={cartAdd} alt="cartAdd" />
-                }
+            {isEditCartAllow ?
+                <div className="cartBtn addCart" onClick={() => cartOnClick(data.id, !isInCart)}>
+                    {isInCart ?
+                        <img src={cartRemove} alt="cartRemove" />
+                        :
+                        <img src={cartAdd} alt="cartAdd" />
+                    }
 
-            </div>
+                </div>
+                :
+                ''
+            }
+
         </div>
     )
 }
@@ -75,13 +81,13 @@ function matchFilter(data, filter, currentLocation) {
 
 export function RestaurantContainer({ data, currentLocation, onContainerClick, cartOnClick, filter, cart }) {
     console.log(data, filter);
-    console.log('cart', cart,"data.id",data.id,'cart.some(item => item.restaurant_id === data.id)',cart.some(item => item.restaurant_id === data.id));
+    console.log('cart', cart, "data.id", data.id, 'cart.some(item => item.restaurant_id === data.id)', cart.some(item => item.restaurant_id === data.id));
     const [isInCart, setIsInCart] = useState(cart.some(item => item.restaurant_id === data.id));
 
     useEffect(() => {
         setIsInCart(cart.some(item => item.restaurant_id === data.id));
-        console.log('cart',cart,'data.id',data.id);
-        console.log("isIncart",isInCart)
+        console.log('cart', cart, 'data.id', data.id);
+        console.log("isIncart", isInCart)
     }, [cart, data.id]);
 
 
@@ -99,4 +105,22 @@ export function RestaurantContainer({ data, currentLocation, onContainerClick, c
         />
     )
 
+}
+
+export function InCartRestaurantContainer({ data, currentLocation, onContainerClick, cartOnClick,isEditCartAllow }) {
+    console.log(data);
+
+    return (
+        <>
+            <BuildContainer
+                data={data}
+                currentLocation={currentLocation}
+                onContainerClick={onContainerClick}
+                cartOnClick={cartOnClick}
+                isInCart={true}
+                isEditCartAllow={isEditCartAllow??true}
+            />
+        </>
+
+    )
 }

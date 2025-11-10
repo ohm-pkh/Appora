@@ -11,6 +11,7 @@ import ResetPassword from './page/ResetPassword.jsx'
 import RestaurantPage from './page/RestaurantPage.jsx'
 import Preview from './page/Preview.jsx'
 import RestaurantFullDetail from './page/RestaurantFullDetail.jsx'
+import CartPage from './page/cart.jsx'
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -31,6 +32,7 @@ function App() {
         <Route path='/RestaurantPage' element={<RestaurantPage/>}/>
         <Route path='/Preview' element={<Preview/>}/>
         <Route path='/RestaurantDetail/:id' element={<RestaurantFullDetail/>}/>
+        <Route path='/Cart' element={<CartPage/>}/>
       </Routes>
     </Router>
   )
