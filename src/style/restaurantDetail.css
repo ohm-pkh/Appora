@@ -69,5 +69,9 @@
     width: 100dvw;
     height: 30dvh;
   }
+
+  .detailContainer{
+    max-height: 70dvh;
+  }
 }
  
