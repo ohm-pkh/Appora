@@ -1,0 +1,43 @@
+.slotContainer {
+  height: 150px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.slotScroll {
+  display: flex;
+  flex-direction: column;
+  animation: slotRoll 2s linear infinite;
+}
+
+.slotItem {
+  padding: 1em;
+  border-bottom: 1px solid #ddd;
+  background-color: #fff;
+  font-size: 1.1em;
+  font-weight: 500;
+  text-align: center;
+}
+
+@keyframes slotRoll {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-90%);
+  }
+}
+
+/* Optional blink (you can keep it if you like) */
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}

@@ -55,7 +55,7 @@ export default function Home() {
             setStatus("")
         }
     }
-  
+
 
     async function getRestaurant() {
         try {
@@ -159,7 +159,7 @@ export default function Home() {
             const token = Cookies.get('token');
             const api = createApi('Cart');
             await axios.post(api, { token, restaurant_id: id });
-            setCart(prev => [...prev, {restaurant_id:id}]);
+            setCart(prev => [...prev, { restaurant_id: id }]);
         } catch (e) {
             console.log(e);
         } finally {
@@ -186,7 +186,7 @@ export default function Home() {
     async function updateCartWithTransport() {
         setStatus('waiting')
         let Tcart = JSON.parse(localStorage.getItem('Transport') || '[]');
-        console.log("Tcart at start",Tcart)
+        console.log("Tcart at start", Tcart)
 
         Tcart = Tcart.filter(tc => Object.keys(tc).length > 0);
 
@@ -199,15 +199,15 @@ export default function Home() {
         });
 
         const itemsNeedingTransport = Tcart.filter(tc => tc.transport_time === undefined);
-        if(currentLocation.lat===null){
+        if (currentLocation.lat === null) {
             await getLocation();
         }
-        console.log("carts",cart);
-        console.log('Tcart',Tcart,'itemsNeedingTransport',itemsNeedingTransport);
-        console.log('current',currentLocation)
+        console.log("carts", cart);
+        console.log('Tcart', Tcart, 'itemsNeedingTransport', itemsNeedingTransport);
+        console.log('current', currentLocation)
         if (itemsNeedingTransport.length > 0) {
             const updatedItems = await getTransportTime({
-                currentLocation:currentLocation,
+                currentLocation: currentLocation,
                 cart: itemsNeedingTransport
             });
 
@@ -257,7 +257,7 @@ export default function Home() {
             unCart(restaurant_id);
         }
     }
-    function onCartClick(){
+    function onCartClick() {
         if (!auth) return StartOverlay('Unauth');
         navigate('/Cart');
     }
@@ -272,21 +272,21 @@ export default function Home() {
 
     return (
         <div className="fullPageContainer" style={{ gap: '0' }}>
-            <Nav auth={auth} doLogout={Logout} openFilter={() => StartOverlay('Filter')} isCart={isCart} isFilter={isFilter} onCartClick={onCartClick}/>
+            <Nav auth={auth} doLogout={Logout} openFilter={() => StartOverlay('Filter')} isCart={isCart} isFilter={isFilter} onCartClick={onCartClick} />
 
             <SearchBar onSearch={onSearch} onChange={(text) => setSearch(text.trim())} />
 
             <div className='restaurantMainContainer'>
                 {
-                
-                restaurants && restaurants.length > 0 ? 
-                    (
-                    restaurants.map(restaurant => (
-                        <RestaurantContainer cartOnClick={cartOnClick} data={restaurant} currentLocation={currentLocation} key={restaurant.id} onContainerClick={(id) => navToRestaurantDetail(id)} filter={filter} cart={cart} unCart={unCart} />
-                    ))
-                    
-                ):
-                    <RestaurantNotFound />
+
+                    restaurants && restaurants.length > 0 ?
+                        (
+                            restaurants.map(restaurant => (
+                                <RestaurantContainer cartOnClick={cartOnClick} data={restaurant} currentLocation={currentLocation} key={restaurant.id} onContainerClick={(id) => navToRestaurantDetail(id)} filter={filter} cart={cart} unCart={unCart} />
+                            ))
+
+                        ) :
+                        <RestaurantNotFound />
                 }
 
             </div>
