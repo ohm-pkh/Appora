@@ -41,7 +41,6 @@ function BuildCard({ r, data, Location, onClose, reRandom, isSpinning }) {
                         <div className="slotScroll">
                             {Array.from({ length: 100 }).map(() => {
                                 const randomItem = getRandomItem(data ??data[0]);
-                                console.log(randomItem);
                                 return (
                                     <InCartRestaurantContainer
                                         data={randomItem}
