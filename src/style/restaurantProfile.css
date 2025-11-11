@@ -10,6 +10,7 @@
     overflow-y: scroll;
     overflow-x: hidden;
     box-sizing: border-box;
+    position: relative;
 }
 
 .header{
@@ -374,6 +375,10 @@ label {
 
   .namePrice{
     flex-direction: column;
+  }
+
+  .fullPageContainer{
+    max-height: 100dvh;
   }
 }
  

@@ -80,8 +80,6 @@ function matchFilter(data, filter, currentLocation) {
 }
 
 export function RestaurantContainer({ data, currentLocation, onContainerClick, cartOnClick, filter, cart }) {
-    console.log(data, filter);
-    console.log('cart', cart, "data.id", data.id, 'cart.some(item => item.restaurant_id === data.id)', cart.some(item => item.restaurant_id === data.id));
     const [isInCart, setIsInCart] = useState(cart.some(item => item.restaurant_id === data.id));
 
     useEffect(() => {
