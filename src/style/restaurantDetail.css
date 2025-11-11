@@ -71,7 +71,7 @@
   }
 
   .detailContainer{
-    max-height: calc(70dvh - 2em);
+    max-height: 72dvh;
   }
 }
  
