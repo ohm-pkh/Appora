@@ -3,7 +3,7 @@ import { SaveBtn, CloseBtn } from './closeSaveOverlay';
 import { useEffect, useState } from 'react'
 
 
-export default function Filter({ types, categories, filter, onSave, onClose, isDistanceNotNeed=true}) {
+export default function Filter({ types, categories, filter, onSave, onClose, isDistanceNotNeed=false}) {
     const defaultFilter = { type: [], category: [], price: null, distance: isDistanceNotNeed?null:5 };
     console.log('filter distance',filter.distance);
     const [newDistance, setNewDistance] = useState(filter.distance ?? (isDistanceNotNeed?null:5));

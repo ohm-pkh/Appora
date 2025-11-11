@@ -262,6 +262,7 @@ export default function RestaurantPage() {
                 id: m.id,
                 name: m.name,
                 photo_path: m.photo_path,
+                description: m.description,
                 public_id: m.public_id,
                 price: m.price,
                 category: m.category
