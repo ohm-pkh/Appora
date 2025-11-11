@@ -12,7 +12,7 @@ function IndicatorDot({isDot}){
     )
 }
 
-export function Nav({auth = false,doLogout,openFilter,isCart,isFilter}) {
+export function Nav({auth = false,doLogout,openFilter,isCart,isFilter,onCartClick}) {
     const navigate = useNavigate();
     
     function Login(){
@@ -26,7 +26,7 @@ export function Nav({auth = false,doLogout,openFilter,isCart,isFilter}) {
                 <span onClick={()=>navigate('/Random')}>
                     <img src={randomSvg} alt="random" />
                 </span>
-                <span onClick={()=>navigate('/Cart')}>
+                <span onClick={()=>onCartClick()}>
                     <img src={cartSvg} alt="cart" />
                     <IndicatorDot isDot={isCart}/>
                 </span>

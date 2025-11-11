@@ -257,6 +257,10 @@ export default function Home() {
             unCart(restaurant_id);
         }
     }
+    function onCartClick(){
+        if (!auth) return StartOverlay('Unauth');
+        navigate('/Cart');
+    }
 
     useEffect(() => {
         CheckAuth();
@@ -268,7 +272,7 @@ export default function Home() {
 
     return (
         <div className="fullPageContainer" style={{ gap: '0' }}>
-            <Nav auth={auth} doLogout={Logout} openFilter={() => StartOverlay('Filter')} isCart={isCart} isFilter={isFilter} />
+            <Nav auth={auth} doLogout={Logout} openFilter={() => StartOverlay('Filter')} isCart={isCart} isFilter={isFilter} onCartClick={onCartClick}/>
 
             <SearchBar onSearch={onSearch} onChange={(text) => setSearch(text.trim())} />
 
