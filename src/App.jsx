@@ -11,7 +11,7 @@ import ResetPassword from './page/ResetPassword.jsx'
 import RestaurantPage from './page/RestaurantPage.jsx'
 import Preview from './page/Preview.jsx'
 import RestaurantFullDetail from './page/RestaurantFullDetail.jsx'
-import CartPage from './page/cart.jsx'
+import CartPage from './page/Cart.jsx'
 import RandomPage from './page/RandomPage.jsx'
 
 function App() {
