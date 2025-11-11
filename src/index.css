@@ -1,3 +1,6 @@
+@import "leaflet/dist/leaflet.css";
+
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -44,6 +47,7 @@ button {
   font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
+  height: fit-content;
   transition: border-color 0.25s;
 }
 button:hover {

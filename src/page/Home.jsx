@@ -46,7 +46,7 @@ export default function Home() {
                 !auth ?<Link to="/Login">
                 <button style={{ color: "white" }}>Go to Log In</button>
             </Link> :
-            <button style={{ color: "white" }} onClick={Logout}>Log out</button>
+            <button style={{ color: "white",width:"100%" }} onClick={Logout} >Log out</button>
             }
             
         </>

@@ -58,7 +58,7 @@ export default function ForgotPassword() {
 
                 <form onSubmit={handdleSend}>
                     <input type="email" id="email" placeholder='Email' onChange={(e) => { setEmail(e.target.value) }} />
-                    <button type="submit">Send Email</button>
+                    <button type="submit" style={{width:"100%"}} >Send Email</button>
                 </form>
 
                 <p style={{ color: 'red' }}>{error ? error : ' '}</p>

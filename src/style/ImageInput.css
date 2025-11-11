@@ -1,0 +1,70 @@
+.circular-image-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.circle-container {
+  overflow: hidden;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+  display: grid;
+  place-items: center;
+  position: relative;
+  cursor: pointer;
+  background-color: #f3f4f6;
+  transition: all 0.15s ease;
+  border: #969AB8 1px solid;
+  box-sizing: border-box;
+}
+
+.circle-container.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.circle-image {
+  object-fit: cover;
+  display: block;
+}
+
+.placeholder {
+  font-size: 2rem;
+  color: #9ca3af;
+}
+
+.hover-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.18);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8rem;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+}
+
+.clear-button {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  background: white;
+  color: #374151;
+  font-size: 14px;
+  line-height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.clear-button:hover {
+  background-color: #f87171;
+  color: white;
+  border-color: #f87171;
+}

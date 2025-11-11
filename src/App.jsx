@@ -9,6 +9,7 @@ import ForgotPassword from './page/FogotPassword.jsx'
 import RestaurantVerify from './page/RestaurantVerify.jsx'
 import ResetPassword from './page/ResetPassword.jsx'
 import RestaurantPage from './page/RestaurantPage.jsx'
+import Preview from './page/Preview.jsx'
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -27,6 +28,7 @@ function App() {
         <Route path='/VerifyPasswordRecovery/:email' element={<RestaurantVerify type='Recovery'/>}/>
         <Route path='/ResetPassword/:token' element={<ResetPassword/>}/>
         <Route path='/RestaurantPage' element={<RestaurantPage/>}/>
+        <Route path='/Preview' element={<Preview/>}/>
       </Routes>
     </Router>
   )

@@ -61,7 +61,7 @@ export default function RestaurantVerify(props) {
                 <OTPInput onChangeOTP={(otp) => setCode(otp)} />
                 <p style={{color:'#D9D9D9'}}>I didn't receive a code <span style={{fontWeight:'bold',color:'#000000',cursor:'pointer'}} onClick={Resend}>Resend</span></p>
                 <p style={{ color: 'red' }}>{error ? error : ' '}</p>
-                <button onClick={SendForm}>Verify</button>
+                <button onClick={SendForm} style={{width:"100%"}}>Verify</button>
             </div>
 
             <WaitingOverlay status={status} />

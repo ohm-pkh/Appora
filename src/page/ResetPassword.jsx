@@ -54,7 +54,7 @@ export default function ResetPassword() {
                 <form onSubmit={SendForm}>
                     <input type="password" name="NewPassword" placeholder="New Password" onChange={(e)=>{setNpassword(e.target.value)}}/>
                     <input type="password" name="ConfirmPassword" placeholder="Confirm Password" onChange={(e)=>{setCpassword(e.target.value)}}/>
-                    <button type="submit">Reset</button>
+                    <button type="submit" style={{width:"100%"}}>Reset</button>
                 </form>
                 <p style={{ color: 'red' }}>{error ? error : ' '}</p>
             </div>
