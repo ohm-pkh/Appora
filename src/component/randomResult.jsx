@@ -3,6 +3,7 @@ import { InCartRestaurantContainer } from "./restaurantContainer"
 import { useNavigate } from "react-router-dom"
 import randomSvg from '../assets/randomSvg.svg'
 import confirmSvg from '../assets/confirmSvg.svg'
+import { useState } from "react"
 
 function getRandomItem(arr) {
     const randomIndex = Math.floor(Math.random() * arr.length);
@@ -10,7 +11,7 @@ function getRandomItem(arr) {
     return arr[randomIndex];
 }
 
-function BuildCard({ r, Location, onClose,reRandom }) {
+function BuildCard({ r, Location, onClose, reRandom }) {
     const navigate = useNavigate();
     return (
         <div style={{ position: 'relative', textAlign: 'left' }}>
@@ -18,7 +19,7 @@ function BuildCard({ r, Location, onClose,reRandom }) {
                 x
             </div>
             <h3 style={{ marginBottom: '1em' }}>Your Random Restaurant is</h3>
-            <div style={{ minWidth: '60vw' }}>
+            <div className="randomCardContainer">
                 <InCartRestaurantContainer data={r} currentLocation={Location} isEditCartAllow={false} />
             </div>
 
@@ -43,29 +44,31 @@ function BuildCard({ r, Location, onClose,reRandom }) {
 
 export function InCart({ data, Location, onClose }) {
     console.log(data);
-    let r = getRandomItem(data);
+    const [r, setR] = useState(() => getRandomItem(data));
     console.log(r);
-    function reRandom(){
-        r = getRandomItem(data)
+    function reRandom() {
+        console.log(data);
+        setR(getRandomItem(data))
     }
     return (
-        <BuildCard r={r} Location={Location} onClose={onClose} reRandom={reRandom}/>
+        <BuildCard r={r} Location={Location} onClose={onClose} reRandom={reRandom} />
     )
 }
 
 
 export function NormCart({ data, Location, onClose }) {
     const useData = data.filter(d => d.isUse === true);
-    if(useData.length===0){
+    const [r, setR] = useState(() => getRandomItem(data));
+    if (useData.length === 0) {
         alert('No restaurant match your condition, please try again.')
         return onClose();
     }
-    let r = getRandomItem(useData);
+    
     console.log(r);
-    function reRandom(){
-        r = getRandomItem(useData)
+    function reRandom() {
+        setR(getRandomItem(useData))
     }
     return (
-        <BuildCard r={r} Location={Location} onClose={onClose} reRandom={reRandom}/>
+        <BuildCard r={r} Location={Location} onClose={onClose} reRandom={reRandom} />
     )
 }

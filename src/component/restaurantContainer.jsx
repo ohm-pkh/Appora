@@ -106,7 +106,7 @@ export function RestaurantContainer({ data, currentLocation, onContainerClick, c
 }
 
 export function InCartRestaurantContainer({ data, currentLocation, onContainerClick, cartOnClick,isEditCartAllow }) {
-    console.log(data);
+    console.log('data',data);
 
     return (
         <>
