@@ -3,20 +3,15 @@ import { InCartRestaurantContainer } from "./restaurantContainer"
 import { useNavigate } from "react-router-dom"
 import randomSvg from '../assets/randomSvg.svg'
 import confirmSvg from '../assets/confirmSvg.svg'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import '../style/randomResult.css'
 
-// ──────────────────────────────
-// Utility function
-// ──────────────────────────────
 function getRandomItem(arr) {
     const randomIndex = Math.floor(Math.random() * arr.length);
     return arr[randomIndex];
 }
 
-// ──────────────────────────────
-// UI for showing result + controls
-// ──────────────────────────────
+
 function BuildCard({ r, data, Location, onClose, reRandom, isSpinning }) {
     const navigate = useNavigate();
 
@@ -40,22 +35,13 @@ function BuildCard({ r, data, Location, onClose, reRandom, isSpinning }) {
 
             <div
                 className="randomCardContainer"
-            // style={{
-            //   height: "220px",
-            //   overflow: "hidden",
-            //   display: "flex",
-            //   justifyContent: "center",
-            //   alignItems: "center",
-            //   borderRadius: "12px",
-            //   border: "2px solid black",
-            //   background: "white",
-            // }}
             >
                 {isSpinning ? (
                     <div className="slotContainer">
                         <div className="slotScroll">
                             {Array.from({ length: 100 }).map(() => {
-                                const randomItem = getRandomItem(data ?? []);
+                                const randomItem = getRandomItem(data ??data[0]);
+                                console.log(randomItem);
                                 return (
                                     <InCartRestaurantContainer
                                         data={randomItem}
@@ -117,9 +103,7 @@ function BuildCard({ r, data, Location, onClose, reRandom, isSpinning }) {
     );
 }
 
-// ──────────────────────────────
-// For "InCart" mode
-// ──────────────────────────────
+
 export function InCart({ data, Location, onClose }) {
     const [r, setR] = useState(() => getRandomItem(data));
     const [isSpinning, setIsSpinning] = useState(false);
@@ -148,12 +132,10 @@ export function InCart({ data, Location, onClose }) {
     );
 }
 
-// ──────────────────────────────
-// For "NormCart" mode (filtered data)
-// ──────────────────────────────
+
 export function NormCart({ data, Location, onClose }) {
     const useData = data.filter((d) => d.isUse === true);
-    const [r, setR] = useState();
+    const [r, setR] = useState(()=>getRandomItem(useData));
     const [isSpinning, setIsSpinning] = useState(false);
 
     if (useData.length === 0) {
@@ -170,6 +152,8 @@ export function NormCart({ data, Location, onClose }) {
             setIsSpinning(false);
         }, duration);
     }
+
+
 
     return (
         <BuildCard
