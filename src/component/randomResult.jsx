@@ -3,7 +3,7 @@ import { InCartRestaurantContainer } from "./restaurantContainer"
 import { useNavigate } from "react-router-dom"
 import randomSvg from '../assets/randomSvg.svg'
 import confirmSvg from '../assets/confirmSvg.svg'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import '../style/randomResult.css'
 
 // ──────────────────────────────
@@ -135,6 +135,10 @@ export function InCart({ data, Location, onClose }) {
             setIsSpinning(false);
         }, duration);
     }
+    useEffect(() => {
+            reRandom();
+    }, []);
+
 
     return (
         <BuildCard
@@ -153,14 +157,8 @@ export function InCart({ data, Location, onClose }) {
 // ──────────────────────────────
 export function NormCart({ data, Location, onClose }) {
     const useData = data.filter((d) => d.isUse === true);
-    const [r, setR] = useState(() => getRandomItem(useData));
+    const [r, setR] = useState();
     const [isSpinning, setIsSpinning] = useState(false);
-
-    if (useData.length === 0) {
-        alert("No restaurant matches your condition, please try again.");
-        return onClose();
-    }
-
     function reRandom() {
         setIsSpinning(true);
         const duration = 2000 + Math.random() * 1000;
@@ -170,6 +168,14 @@ export function NormCart({ data, Location, onClose }) {
             setIsSpinning(false);
         }, duration);
     }
+    useEffect(() => {
+        if (useData.length === 0) {
+            alert("No restaurant matches your condition, please try again.");
+            onClose();
+        } else {
+            reRandom();
+        }
+    }, []);
 
     return (
         <BuildCard
