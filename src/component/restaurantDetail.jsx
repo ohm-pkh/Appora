@@ -67,7 +67,7 @@ export default function RestaurantDetail({ status, info, types, currentDay, loca
                 }
             </div>
             <div className="detailContainer">
-                <div style={{ backgroundColor: '#D9D9D9', height: '0.3em', width: '3em', placeSelf: 'center', margin: '1em 0', borderRadius: '0.2em' }} />
+                <div style={{ backgroundColor: '#D9D9D9', height: '0.3em', width: '3em', margin: '1em auto', borderRadius: '0.2em' }} />
                 <div className="typeDetailContainer allowOverflow">
                     {types.length !== 0 ? types.map((type, index) => (
                         <div key={index} className="typeContainer" style={{ height: '2.5em', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'black', backgroundColor: '#D9D9D9' }}>
