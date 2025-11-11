@@ -59,7 +59,7 @@ function overlayType(type, params) {
     }else if(type === 'Filter'){
         return (
             <div className="overFilterContainer">
-                <Filter types={params.types} categories={params.categories} filter={params.filter} onSave={params.onSave} onClose={params.onClose}/>
+                <Filter types={params.types} categories={params.categories} filter={params.filter} onSave={params.onSave} onClose={params.onClose} isDistanceNotNeed={true}/>
             </div>
         )
     }
