@@ -1,7 +1,7 @@
-export function CloseBtn(onClose){
-    return(
-        <button onClick={onClose}>Close</button>
-    )
+export function CloseBtn(onClose) {
+  return (
+    <button onClick={onClose}>Close</button>
+  )
 }
 
 // closeSaveOverlay.jsx
@@ -15,7 +15,9 @@ export function SaveBtn(onSave, onClose, data, error = false) {
       // if there's a known error string (like form error), don't close
       if (error) return;
 
-      onClose();
+      if (typeof onClose === 'function') {
+        onClose();
+      }
     } catch (e) {
       console.error("Save error:", e);
       // do not close on error

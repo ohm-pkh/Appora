@@ -10,6 +10,9 @@ import RestaurantVerify from './page/RestaurantVerify.jsx'
 import ResetPassword from './page/ResetPassword.jsx'
 import RestaurantPage from './page/RestaurantPage.jsx'
 import Preview from './page/Preview.jsx'
+import RestaurantFullDetail from './page/RestaurantFullDetail.jsx'
+import CartPage from './page/cart.jsx'
+import RandomPage from './page/RandomPage.jsx'
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -29,6 +32,9 @@ function App() {
         <Route path='/ResetPassword/:token' element={<ResetPassword/>}/>
         <Route path='/RestaurantPage' element={<RestaurantPage/>}/>
         <Route path='/Preview' element={<Preview/>}/>
+        <Route path='/RestaurantDetail/:id' element={<RestaurantFullDetail/>}/>
+        <Route path='/Cart' element={<CartPage/>}/>
+        <Route path='/Random' element={<RandomPage/>}/>
       </Routes>
     </Router>
   )

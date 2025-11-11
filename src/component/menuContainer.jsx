@@ -37,7 +37,7 @@ export default function MenuContainer({ menu, deleteMenu, editMenu, allowEdit = 
                 )}
             </div>
 
-            <div className="MenuInfo">
+            <div className="cardInfo">
                 <div className="namePrice">
                     <strong style={{ width: '50%', height: '1em', marginBottom: '1em', }}>{menu.name}</strong>
                     <div style={{ width: '50%', height: '1em', marginBottom: '1em' }}>Price: {menu.price} THB</div>

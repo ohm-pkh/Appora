@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import WaitingOverlay from '../component/WaitingOverlay.jsx';
@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 import { createApi } from '../function/api.js';
 import Homesvg from '../assets/Home.svg'
 import Gbutton from '../component/Googleauth.jsx';
+import OverlayHomePage from '../component/Overlay.jsx';
 import '../style/Form.css'
 
 export default function Login() {
@@ -58,6 +59,11 @@ export default function Login() {
 
 
     }
+
+    useEffect(()=>{
+        Cookies.remove('token');
+        localStorage.removeItem('Transport');
+    },[])
 
     return (
         <>

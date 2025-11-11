@@ -1,5 +1,6 @@
 .fullPageContainer{
     height: 100vh;
+    max-width: 100vw;
     min-width: 100vw;
     background-color: var(--secondary-color);
     display: flex;
@@ -302,7 +303,7 @@ label {
 
 .menuContainer {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 1em;
   width: 100%;  /* or fixed width */
   padding: 1em;
@@ -328,14 +329,14 @@ label {
   overflow: hidden;
 }
 
-.MenuInfo {
+.cardInfo {
   flex: 1;       /* take remaining space */
   min-width: 0;  /* crucial to allow shrinking */
   display: flex;
   flex-direction: column;
 }
 
-.MenuInfo > div, .MenuInfo > strong {
+.cardInfo > div, .MenuInfo > strong {
   margin-bottom: 0.5em;
   white-space: nowrap;
   overflow: hidden;
@@ -353,6 +354,11 @@ label {
 .namePrice{
   display: flex;
   text-align: left;
+}
+
+.editDelete{
+  align-self: start;
+  width: 1.5em;
 }
 
 
