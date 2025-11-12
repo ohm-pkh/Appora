@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { createApi } from './api';
 
 export default async function getTransportTime(frontendData) {
     console.log(frontendData)
@@ -15,7 +16,8 @@ export default async function getTransportTime(frontendData) {
     }
 
     try {
-        const response = await axios.post('http://localhost:3000/TransportTime',frontendData
+        const api = createApi('TransportTime');
+        const response = await axios.post(api,frontendData
         );
         console.log('Updated cart:', response.data.cart);
         return response.data.cart;
