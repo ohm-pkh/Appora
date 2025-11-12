@@ -94,6 +94,10 @@ export default function RandomPage() {
     }
 
     function StartOverlay(act) {
+        if(!currentLocation){
+            alert(`We can't track your location.`);
+            return;
+        }
         setOverlay({ status: true, action: act });
     }
 
