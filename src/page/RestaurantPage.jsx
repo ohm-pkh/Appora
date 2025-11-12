@@ -428,7 +428,7 @@ export default function RestaurantPage() {
                         {currentDay && !isEmergency ? <><div>Today: {currentDay.day}</div><div>Open: {currentDay.open}</div><div>Close: {currentDay.close}</div></> : "Close"}
                     </div>
                     <button style={{ height: '100%' }} onClick={() => emergencyClick()}>
-                        {!isEmergency ? 'Emergency Close' : 'Cancle Emergency'}
+                        {!isEmergency ? 'Emergency Close' : 'Cancel Emergency'}
                     </button>
                 </div>
             </div>
