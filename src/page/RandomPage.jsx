@@ -69,13 +69,15 @@ export default function RandomPage() {
         try {
             const newRestaurants = data.map(res => {
                 const d = distanceKm(currentLocation.lat, currentLocation.lon, res.lat, res.lon);
-
+                console.log("cf",currentFilter)
+                const filterPrice = parseInt('9'.repeat(currentFilter.price));
+                console.log(filterPrice);
                 const isUse = [
                     () => currentFilter.type.length === 0 || currentFilter.type.some(t => res.types.some(x => x.id === t)),
 
                     () => currentFilter.category.length === 0 || currentFilter.category.some(t => res.categories.some(x => x.id === t)),
 
-                    () => !currentFilter.price || (Number(res.min_price) <= currentFilter.price && Number(res.max_price) >= currentFilter.price),
+                    () => !currentFilter.price || (Number(res.min_price) <= filterPrice),
 
                     () => !currentFilter.distance || d <= currentFilter.distance,
 
