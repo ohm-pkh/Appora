@@ -38,7 +38,7 @@ export default function RestaurantDetail({ status, info, types, currentDay, loca
         return (
             <table>
                 <tbody>
-                    {delivery ? delivery.map(deli => {
+                    {delivery && delivery.length>0 ? delivery.map(deli => {
                         return (
                             <tr key={deli.name}>
                                 <td style={{ width: '5.5em', maxWidth: '5.5em' }}><h4 style={{ margin: '0' }}>{deli.name}:</h4></td>
