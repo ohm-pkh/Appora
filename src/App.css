@@ -23,6 +23,14 @@ html {
   overflow-y: scroll !important;
 }
 
+body::-webkit-scrollbar{
+  display: none;
+}
+
+html::-webkit-scrollbar{
+  display: none;
+}
+
 @media (max-width:768px) {
 
   body,html {
