@@ -21,7 +21,7 @@ html {
 @media (max-width:768px) {
 
   body,html {
-    background: #ffffff;
+    background-color: #ffffff !important;
     overflow-x: hidden;
     overflow-y: auto;
   }

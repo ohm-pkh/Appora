@@ -30,7 +30,7 @@ function CompContainer({ data, compareTag }) {
 
         setPlaceRestaurant(newPlaces);
     }, [data.id, compareTag]);
-
+    if(Object.keys(placeOfRestaurant).length === 0) return;
     return (
         <div className="CompContainer">
             {placeOfRestaurant ? Object.entries(placeOfRestaurant).map(([field, slot]) => (
@@ -225,7 +225,7 @@ export default function CartPage() {
 
   // ------------------ RENDER ------------------
   return (
-    <div className="fullPageContainer" style={{ gap: "0" }}>
+    <div className="fullPageContainer" style={{ gap: "0",maxHeight:'100dvh', overflow:'hidden',paddingBottom:'0'}}>
       <NavCart
         onRandom={
           restaurants && restaurants.length !== 0
