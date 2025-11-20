@@ -34,10 +34,12 @@
     text-align: left;
     max-width: 100vw;
     display: flex;
+    flex: 1;
     flex-direction: column;
     gap: 0.5em;
     padding: 1em;
     overflow-y: scroll;
+    box-sizing: border-box;
 }
 
 .restaurantMainContainer::-webkit-scrollbar{
