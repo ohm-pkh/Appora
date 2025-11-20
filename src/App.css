@@ -2,7 +2,6 @@
   margin: 0 auto;
   text-align: center;
   max-height: 100vh;
-  overflow-x: scroll;
   --primary-color: #000000;
   --secondary-color: #ffffff;
   --third-color: #D9D9D9;
@@ -21,7 +20,7 @@ html {
   justify-content: center;
   align-items: center;
   background: #f5f5f5;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 @media (max-width:768px) {
@@ -29,7 +28,6 @@ html {
   body,html {
     background-color: #ffffff !important;
     overflow-x: hidden;
-    overflow-y: auto;
     max-height: 100dvh;
   }
 
