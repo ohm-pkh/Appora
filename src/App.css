@@ -20,11 +20,10 @@ html {
   justify-content: center;
   align-items: center;
   background: #f5f5f5;
-  overflow-y: scroll !important;
 }
 
-body::-webkit-scrollbar{
-  display: none;
+html{
+  overflow-y: scroll !important;
 }
 
 html::-webkit-scrollbar{
