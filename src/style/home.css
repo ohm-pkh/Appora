@@ -40,6 +40,10 @@
     overflow-y: scroll;
 }
 
+.restaurantMainContainer::-webkit-scrollbar{
+    display: none;
+}
+
 .searchBar{
     display: flex;
     flex-direction: row;
