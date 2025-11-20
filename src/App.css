@@ -6,7 +6,8 @@
   --third-color: #D9D9D9;
 }
 
-body, html {
+body,
+html {
   margin: 0;
   height: 100%;
   width: 100vw;
@@ -17,3 +18,12 @@ body, html {
   overflow-x: hidden;
 }
 
+@media (max-width:768px) {
+
+  body,html {
+    background: #ffffff;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+}
