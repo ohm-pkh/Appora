@@ -94,11 +94,6 @@ button{
         border: none;
         justify-content:center;
         gap: 20px;
-        overflow-y: scroll;
-    }
-
-    .formContainer::-webkit-scrollbar {
-        display: none;
     }
     
 }
