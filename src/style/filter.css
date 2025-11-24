@@ -14,6 +14,11 @@
     display: none;
 }
 
+.filterTypeTitle {
+    text-align: left;
+    padding-left: 1em;
+}
+
 .optionsContainer {
     overflow-y: scroll;
     height: 90%;
@@ -63,5 +68,10 @@ input[type="range"] {
 
     .overFilterContainer{
         height: 80vh;
+    }
+
+    .filterTypeTitle {
+    padding-top: 10px;
+    padding-bottom: 5px;
     }
 }

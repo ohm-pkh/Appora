@@ -32,7 +32,7 @@ export default function Filter({ types, categories, filter, onSave, onClose, isD
             <div className="optionsContainer">
                 {/* TYPE */}
                 <div>
-                    <h3 style={{ textAlign: "left", paddingLeft: "1.5em" }}>Restaurant Type</h3>
+                    <h3 className="filterTypeTitle">Restaurant Type</h3>
                     <div className="filterOption">
                         {types.map((t) => {
                             const selected = currentFilter?.type?.includes(t.id);
@@ -60,7 +60,7 @@ export default function Filter({ types, categories, filter, onSave, onClose, isD
 
                 {/* CATEGORY */}
                 <div>
-                    <h3 style={{ textAlign: "left", paddingLeft: "1.5em" }}>Menu Categories</h3>
+                    <h3 className="filterTypeTitle">Menu Categories</h3>
                     <div className="filterOption">
                         {categories.map((t) => {
                             const selected = currentFilter?.category?.includes(t.id);
@@ -88,7 +88,7 @@ export default function Filter({ types, categories, filter, onSave, onClose, isD
 
                 {/* PRICE */}
                 <div>
-                    <h3 style={{ textAlign: "left", paddingLeft: "1.5em" }}>Price</h3>
+                    <h3 className="filterTypeTitle">Price</h3>
                     <div className="filterOption" style={{ justifyContent: "center", gap: "1em" }}>
                         {[1, 2, 3, 4, 5].map((i) => {
                             const selected = currentFilter?.price === i; // check single value
@@ -114,7 +114,7 @@ export default function Filter({ types, categories, filter, onSave, onClose, isD
 
                 {/* DISTANCE */}
                 <div>
-                    <h3 style={{ textAlign: "left", paddingLeft: "1.5em" }}> Distance {newDistance || newDistance >= 0 ? newDistance : "undefine"} km
+                    <h3 className="filterTypeTitle"> Distance {newDistance || newDistance >= 0 ? newDistance : "undefine"} km
                     </h3>
                     <input
                         type="range"

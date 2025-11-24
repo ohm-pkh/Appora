@@ -58,7 +58,7 @@ export default function RestaurantDetail({ status, info, types, currentDay, loca
             <div className='imgContainerDetail' style={{ backgroundImage: `url(${info.photo_path ?? ''})`, display: 'flex', justifyContent: 'left', alignItems: 'end', position: 'relative' }}>
                 <button onClick={() => navigate(-1)} className="goBackButton">
                     <img src={goBackArrow} alt="go back" />
-                    <span> Go Back </span>
+                    <span style={{ paddingTop: '2px' }}> Go Back </span>
                 </button>
                 {status === 'Preview' ?
                     <h2>Preview</h2>
